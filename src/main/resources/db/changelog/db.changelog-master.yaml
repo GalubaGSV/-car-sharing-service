@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: /db/changelog/changes/create-cars_table.sql
+  - include:
+      file: /db/changelog/changes/create-payments_table.sql
