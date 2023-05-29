@@ -3,6 +3,7 @@ package com.example.carsharingservice.service.impl;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        User userFromDb = userRepository.getReferenceById(user.getId());
+        User userFromDb = userRepository.findById(user.getId()).orElseThrow(
+                () -> new EntityNotFoundException("There is no user with this id"));
         userFromDb.setEmail(user.getEmail());
         userFromDb.setRole(user.getRole());
         userFromDb.setFirstName(user.getFirstName());
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException("User with this email does not exist!"));
     }
 }

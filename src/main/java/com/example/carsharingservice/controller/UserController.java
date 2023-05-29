@@ -25,9 +25,15 @@ public class UserController {
 
     @PutMapping("/{id}/role")
     public UserResponseDto updateRole(@PathVariable Long id, @RequestParam String role) {
-        User user = userService.get(id);
-        user.setRole(Role.valueOf(role));
-        return mapper.mapToDto(userService.update(user));
+        try {
+            Role.valueOf(role);
+            User user = userService.get(id);
+            user.setRole(Role.valueOf(role));
+            return mapper.mapToDto(userService.update(user));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("There is no such role!" + e);
+        }
+
     }
 
     @GetMapping("/me")
