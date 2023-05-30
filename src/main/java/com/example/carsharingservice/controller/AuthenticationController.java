@@ -6,7 +6,7 @@ import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.exception.AuthenticationException;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.security.AuthenticationService;
-import com.example.carsharingservice.jwt.JwtTokenProvider;
+import com.example.carsharingservice.security.jwt.JwtTokenProvider;
 import com.example.carsharingservice.service.mapper.UserMapper;
 import java.util.List;
 import java.util.Map;
