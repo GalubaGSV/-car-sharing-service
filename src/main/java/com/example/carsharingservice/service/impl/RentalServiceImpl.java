@@ -43,6 +43,7 @@ public class RentalServiceImpl implements RentalService {
         carToReturn.setInventory(carToReturn.getInventory() + 1);
         carService.update(carToReturn.getId(), carToReturn);
         rental.setActualReturnDate(LocalDateTime.now());
+        rentalRepository.save(rental);
         return rental;
     }
 }
