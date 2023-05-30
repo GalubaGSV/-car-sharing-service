@@ -4,7 +4,9 @@ import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.Rental;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PaymentMapper  implements DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> {
     @Override
     public Payment mapToModel(PaymentRequestDto dto) {
@@ -16,7 +18,7 @@ public class PaymentMapper  implements DtoMapper<PaymentRequestDto, PaymentRespo
         rental.setId(dto.getRentalId());
         payment.setRental(rental);
         payment.setPaymentSessionId(dto.getPaymentSessionId());
-        payment.setPaymentUrl("URL");
+        payment.setPaymentUrl(dto.getPaymentUrl());
         return payment;
     }
 
@@ -29,7 +31,7 @@ public class PaymentMapper  implements DtoMapper<PaymentRequestDto, PaymentRespo
         paymentResponseDto.setPaymentType(model.getPaymentType().getValue());
         paymentResponseDto.setRentalId(model.getRental().getId());
         paymentResponseDto.setPaymentSessionId(model.getPaymentSessionId());
-        paymentResponseDto.setPaymentUrl("URL");
+        paymentResponseDto.setPaymentUrl(model.getPaymentUrl());
         return paymentResponseDto;
     }
 }
