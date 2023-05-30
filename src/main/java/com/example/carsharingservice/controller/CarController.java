@@ -7,6 +7,8 @@ import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.mapper.CarMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.example.carsharingservice.service.mapper.DtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
-    private final CarMapper carMapper;
+    private final DtoMapper<CarRequestDto, CarResponseDto, Car> carMapper;
 
     @PostMapping
     public CarResponseDto add(@RequestBody CarRequestDto requestDto) {
@@ -34,7 +36,7 @@ public class CarController {
     public List<CarResponseDto> getAll() {
         return carService.getAll().stream()
             .map(carMapper::mapToDto)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @GetMapping("/{id}")
