@@ -25,7 +25,7 @@ public class Payment {
     private PaymentStatus paymentStatus;
     @Column(nullable = false)
     private PaymentType paymentType;
-    @Column(nullable = false)
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
     private Rental rental;
