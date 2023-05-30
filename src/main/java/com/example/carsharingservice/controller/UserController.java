@@ -40,14 +40,14 @@ public class UserController {
     public UserResponseDto get(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        return mapper.mapToDto(userService.findByEmail(email));
+        return mapper.mapToDto(userService.findByEmail(email).get());
     }
 
     @PutMapping("/me")
     public UserResponseDto updateInfo(Authentication auth, UserRequestDto dto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        Long userId = userService.findByEmail(email).getId();
+        Long userId = userService.findByEmail(email).get().getId();
         User user = mapper.mapToModel(dto);
         user.setId(userId);
         return mapper.mapToDto(userService.update(user));
