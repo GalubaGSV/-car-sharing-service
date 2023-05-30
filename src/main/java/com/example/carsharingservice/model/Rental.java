@@ -12,7 +12,7 @@ import jakarta.persistence.FetchType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,11 +22,11 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "rental_date", nullable = false)
-    private Date rentalDate;
+    private LocalDateTime rentalDate;
     @Column(name = "return_date", nullable = false)
-    private Date returnDate;
+    private LocalDateTime returnDate;
     @Column(name = "actual_return_date")
-    private Date actualReturnDate;
+    private LocalDateTime actualReturnDate;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     @EqualsAndHashCode.Exclude
