@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
