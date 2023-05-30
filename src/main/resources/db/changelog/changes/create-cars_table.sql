@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset sql:create-cars_table splitStatements:true endDelimiter:;
 CREATE TABLE IF NOT EXISTS cars (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     model VARCHAR(255) NOT NULL,
     brand VARCHAR(255) NOT NULL,
     car_type VARCHAR(255) NOT NULL,

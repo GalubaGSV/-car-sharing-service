@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset sql:create-payments_table splitStatements:true endDelimiter:;
 CREATE TABLE IF NOT EXISTS payments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     payment_status VARCHAR(255) NOT NULL,
     payment_type VARCHAR(255) NOT NULL,
     rental_id BIGINT,
