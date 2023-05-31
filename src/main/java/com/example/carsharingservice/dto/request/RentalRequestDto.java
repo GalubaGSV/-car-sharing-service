@@ -11,5 +11,5 @@ public class RentalRequestDto {
     private LocalDateTime returnDate;
     private LocalDateTime actualReturnDate;
     private Long carId;
-    private User userId;
+    private Long userId;
 }

@@ -1,6 +1,8 @@
 package com.example.carsharingservice.service;
 
 import com.example.carsharingservice.model.Rental;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RentalService {
@@ -11,4 +13,6 @@ public interface RentalService {
     Rental get(Long id);
 
     Rental returnCarById(Long id, Rental rental);
+
+    List<Rental> getOverdueRentals();
 }
