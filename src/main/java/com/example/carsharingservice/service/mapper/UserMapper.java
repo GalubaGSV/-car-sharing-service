@@ -1,10 +1,7 @@
 package com.example.carsharingservice.service.mapper;
 
-import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.request.UserRequestDto;
-import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
-import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.User;
 import org.springframework.stereotype.Component;
 
