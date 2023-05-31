@@ -11,7 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/rentals/")
+@RequestMapping("/rentals")
 public class RentalController {
     private final RentalService rentalService;
     private final DtoMapper<RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
@@ -31,12 +31,12 @@ public class RentalController {
                 .toList();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public RentalResponseDto get(@PathVariable Long id) {
         return rentalMapper.mapToDto(rentalService.get(id));
     }
 
-    @PostMapping("{id}/return/")
+    @PostMapping("/{id}/return")
     public RentalResponseDto returnCar(@PathVariable Long id,
                                        @RequestBody RentalRequestDto rentalRequestDto) {
         return rentalMapper.mapToDto(rentalService
