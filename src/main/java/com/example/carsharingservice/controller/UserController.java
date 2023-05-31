@@ -5,6 +5,7 @@ import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
+import com.example.carsharingservice.service.mapper.DtoMapper;
 import com.example.carsharingservice.service.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ import org.springframework.security.core.Authentication;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final UserMapper mapper;
+    private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @PutMapping("/{id}/role")
     public UserResponseDto updateRole(@PathVariable Long id, @RequestParam String role) {
@@ -29,7 +30,7 @@ public class UserController {
             Role.valueOf(role);
             User user = userService.get(id);
             user.setRole(Role.valueOf(role));
-            return mapper.mapToDto(userService.update(user));
+            return userMapper.mapToDto(userService.update(user));
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("There is no such role!" + e);
         }
@@ -40,7 +41,7 @@ public class UserController {
     public UserResponseDto get(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        return mapper.mapToDto(userService.findByEmail(email).get());
+        return userMapper.mapToDto(userService.findByEmail(email).get());
     }
 
     @PutMapping("/me")
@@ -48,8 +49,8 @@ public class UserController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         Long userId = userService.findByEmail(email).get().getId();
-        User user = mapper.mapToModel(dto);
+        User user = userMapper.mapToModel(dto);
         user.setId(userId);
-        return mapper.mapToDto(userService.update(user));
+        return userMapper.mapToDto(userService.update(user));
     }
 }

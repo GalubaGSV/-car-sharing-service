@@ -6,7 +6,8 @@ import com.example.carsharingservice.model.Car;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CarMapper {
+public class CarMapper implements DtoMapper<CarRequestDto, CarResponseDto, Car> {
+    @Override
     public Car mapToModel(CarRequestDto dto) {
         Car car = new Car();
         car.setCarType(dto.getCarType());
@@ -17,6 +18,7 @@ public class CarMapper {
         return car;
     }
 
+    @Override
     public CarResponseDto mapToDto(Car car) {
         CarResponseDto dto = new CarResponseDto();
         dto.setCarType(String.valueOf(car.getCarType()));
