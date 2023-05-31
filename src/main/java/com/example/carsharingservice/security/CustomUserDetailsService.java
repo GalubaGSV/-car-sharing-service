@@ -1,6 +1,6 @@
 package com.example.carsharingservice.security;
 
-import static org.springframework.security.core.userdetails.User.*;
+import static org.springframework.security.core.userdetails.User.UserBuilder;
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 import com.example.carsharingservice.model.User;

@@ -7,7 +7,7 @@ import com.example.carsharingservice.model.Rental;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentMapper  implements DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> {
+public class PaymentMapper implements DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> {
     @Override
     public Payment mapToModel(PaymentRequestDto dto) {
         Payment payment = new Payment();
