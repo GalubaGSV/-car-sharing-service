@@ -3,8 +3,8 @@ package com.example.carsharingservice.dto.request;
 import com.example.carsharingservice.lib.FieldsValueMatch;
 import com.example.carsharingservice.lib.ValidEmail;
 import jakarta.persistence.Column;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data

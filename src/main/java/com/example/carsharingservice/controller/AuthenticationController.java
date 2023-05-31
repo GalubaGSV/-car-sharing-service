@@ -8,9 +8,9 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.security.AuthenticationService;
 import com.example.carsharingservice.security.jwt.JwtTokenProvider;
 import com.example.carsharingservice.service.mapper.UserMapper;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class AuthenticationController {
     private final UserMapper userMapper;
 
     @PostMapping("/register")
-    public UserResponseDto register(@RequestBody @Valid UserRegistrationDto dto) {
+    public UserResponseDto register(@RequestBody @Valid UserRegistrationDto dto) throws AuthenticationException {
         User user = authenticationService.register(dto.getEmail(), dto.getPassword(),
                 dto.getFirstName(), dto.getLastName());
         return userMapper.mapToDto(user);
