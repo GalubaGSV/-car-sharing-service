@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,19 +40,23 @@ public class PaymentController {
     private final TelegramNotificationService telegramNotificationService;
 
     @GetMapping
-    public List<PaymentResponseDto> getUserPayments(@RequestParam(name = "user_id") Long userId,
-                                                    Authentication auth) {
+    public List<PaymentResponseDto> getUserPayments(
+            @RequestParam(name = "user_id") Long userId,
+            Authentication auth,
+            @RequestParam(defaultValue = "20") Integer count,
+            @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageRequest = PageRequest.of(page, count);
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         if (user.getRole().equals(Role.MANAGER)) {
-            return paymentService.findByRentalUserId(userId).stream()
+            return paymentService.findByRentalUserId(userId, pageRequest).stream()
                     .map(mapper::mapToDto)
                     .collect(Collectors.toList());
         }
         if (Objects.equals(user.getId(), userId)) {
-            return paymentService.findByRentalUserId(user.getId()).stream()
+            return paymentService.findByRentalUserId(user.getId(), pageRequest).stream()
                     .map(mapper::mapToDto)
                     .collect(Collectors.toList());
         }
