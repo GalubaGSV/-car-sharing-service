@@ -6,6 +6,7 @@ import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
+import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ public class UserController {
             user.setRole(Role.valueOf(role));
             return userMapper.mapToDto(userService.update(user));
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("There is no such role!" + e);
+            throw new RuntimeException("There is no such role!", e);
         }
 
     }
@@ -40,14 +41,16 @@ public class UserController {
     public UserResponseDto get(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        return userMapper.mapToDto(userService.findByEmail(email).get());
+        return userMapper.mapToDto(userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User doesn't exist!")));
     }
 
     @PutMapping("/me")
     public UserResponseDto updateInfo(Authentication auth, UserRequestDto dto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        Long userId = userService.findByEmail(email).get().getId();
+        Long userId = userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User doesn't exist!")).getId();
         User user = userMapper.mapToModel(dto);
         user.setId(userId);
         return userMapper.mapToDto(userService.update(user));

@@ -1,5 +1,7 @@
 # CAR SHARING SERVICE
 
+![img.png](img.png)
+
 ## Project Description
 
 There is a car-sharing service in our city, where you can rent cars and pay for your usage using cash, depending on the
@@ -10,12 +12,11 @@ cars in the service. Additionally, you can only make payments with cash; there i
 car-sharing service administration has no way of knowing who returned the car on time and who did not.In this project,
 we solve these issues.
 
-The main task of which is the implementation of an online car rental management system. This system will streamline the
+The main task of the project is the implementation of an online car rental management system. This system will
+streamline the
 work of the service administrators and greatly enhance the user experience.
 
-## Requirements
-
-### Functional (what the system should do)
+## Functional (what the system should do)
 
 - Web-based
 - Manage car sharing inventory
@@ -23,13 +24,7 @@ work of the service administrators and greatly enhance the user experience.
 - Manage customers
 - Display notifications
 - Handle payments
-
-### Non-functional (what the system should deal with)
-
-- Support up to 5 concurrent users
-- Manage up to 1000 cars
-- Handle 50,000 rentals per year
-- Approximately 30MB of data per year
+- Telegram notification
 
 ## Architecture
 
@@ -77,7 +72,7 @@ work of the service administrators and greatly enhance the user experience.
 
 - Authentication Controller
     - POST: `/register` - register a new user
-    - POST: `/login` - Login to the system, receive a token.
+    - POST: `/login` - Login to the system, receive a token
 
 - Users Controller
     - PUT: `/users/{id}/role` - update user role
@@ -92,5 +87,45 @@ work of the service administrators and greatly enhance the user experience.
     - DELETE: `/cars/{id}` - delete car ин шв
 
 - Rentals Controller
-    - POST: rentals/ - add a new rental (decrease car inventory by 1)
-    - GET: rentals/?user_id=...&is_active=... - get rentals by user ID and whether the rental is still active
+    - POST: `/rentals` - add a new rental
+    - GET: `/rentals` - get rentals by userId and
+    - GET: `/rentals/{id}` - get rental by
+    - POST: `/rentals/{id}/return` - is called to process a car return
+
+- Payments Controller
+    - GET:    `/payments`    - get user's payments
+    - POST:    `/payments`    - create payment session
+    - GET:    `/payments/success`    - check successful Stripe payments (Endpoint for stripe redirection)
+    - GET:    `/payments/cancel`    - return payment paused message
+
+## Telegram notifications
+
+In this project, we notify clients and managers using a Telegram bot.
+Notifications come when leases are created, leases are overdue, and payments are successful
+
+## Getting Started
+
+#### To get started with the car-sharing service, follow these steps:
+
+- Clone the repository
+- You need to get a token to create a Telegram-bot `https://t.me/BotFather`
+- Set your credentials in `application.properties`
+- Set up the necessary environment variables. Refer to `.env` for the required variables
+- Build the project: mvn compile
+- Run the application: npm start or yarn start.
+
+## Also, you can use docker
+
+- First, make sure you have docker installed and running
+- Clone the repository
+- Set up the necessary environment variables. Refer to `.env` for the required variables
+- Build the project: `mvn clean package`
+- Run the command `docker-compose up`
+
+You can test the operation of the application using swagger using
+address `http://localhost:8080/swagger-ui/index.html#/`
+
+## Conclusions
+
+By implementing these features in an online car rental management system, the service can automate processes,
+provide real-time information, and offer a more convenient and efficient experience for both users and administrators.
