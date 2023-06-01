@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -35,24 +34,34 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-       return http.cors(AbstractHttpConfigurer::disable)
+        return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                       auth.requestMatchers(HttpMethod.POST,"/register", "/login").permitAll()
+                       auth.requestMatchers(HttpMethod.POST,"/register",
+                                       "/login").permitAll()
                                .requestMatchers(HttpMethod.GET, "/test").permitAll()
-                               .requestMatchers(HttpMethod.POST, "/cars", "/rentals/{id}/return").hasRole("MANAGER")
-                               .requestMatchers(HttpMethod.POST, "/rentals", "/payments").hasAnyRole("MANAGER", "CUSTOMER")
-                               .requestMatchers(HttpMethod.GET, "/users/me", "/cars/{id}", "/payments").hasAnyRole("MANAGER", "CUSTOMER")
-                               .requestMatchers(HttpMethod.GET, "/rentals", "/rentals/{id}", "/payments",
-                                       "/payments/success", "/payments/cancel").hasRole("MANAGER")
+                               .requestMatchers(HttpMethod.POST, "/cars",
+                                       "/rentals/{id}/return").hasRole("MANAGER")
+                               .requestMatchers(HttpMethod.POST, "/rentals",
+                                       "/payments").hasAnyRole("MANAGER", "CUSTOMER")
+                               .requestMatchers(HttpMethod.GET, "/users/me",
+                                       "/cars/{id}",
+                                       "/payments").hasAnyRole("MANAGER", "CUSTOMER")
+                               .requestMatchers(HttpMethod.GET, "/rentals", "/rentals/{id}",
+                                       "/payments",
+                                       "/payments/success",
+                                       "/payments/cancel").hasRole("MANAGER")
                                .requestMatchers(HttpMethod.GET,"/cars").permitAll()
                                .requestMatchers(HttpMethod.PATCH, "/cars/{id}").hasRole("MANAGER")
-                               .requestMatchers(HttpMethod.PUT, "users/{id}/role").hasRole("MANAGER")
-                               .requestMatchers(HttpMethod.PUT, "users/me").hasAnyRole("MANAGER", "CUSTOMER")
+                               .requestMatchers(HttpMethod.PUT, "users/{id}/role")
+                                                .hasRole("MANAGER")
+                               .requestMatchers(HttpMethod.PUT, "users/me")
+                                                .hasAnyRole("MANAGER", "CUSTOMER")
                                .requestMatchers(HttpMethod.DELETE, "/cars/{id}").hasRole("MANAGER")
                                .anyRequest().authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(AbstractHttpConfigurer::disable)

@@ -1,6 +1,5 @@
 package com.example.carsharingservice.dto.response;
 
-import com.example.carsharingservice.model.User;
 import java.time.LocalDateTime;
 import lombok.Data;
 

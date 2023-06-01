@@ -26,7 +26,8 @@ public class AuthenticationController {
     private final UserMapper userMapper;
 
     @PostMapping("/register")
-    public UserResponseDto register(@RequestBody @Valid UserRegistrationDto dto) throws AuthenticationException {
+    public UserResponseDto register(@RequestBody @Valid UserRegistrationDto dto)
+            throws AuthenticationException {
         User user = authenticationService.register(dto.getEmail(), dto.getPassword(),
                 dto.getFirstName(), dto.getLastName());
         return userMapper.mapToDto(user);
@@ -37,7 +38,8 @@ public class AuthenticationController {
             throws AuthenticationException {
         User user = authenticationService.login(dto.getLogin(),
                 dto.getPassword());
-        String token = jwtTokenProvider.createToken(user.getEmail(), List.of(user.getRole().name()));
+        String token = jwtTokenProvider.createToken(user.getEmail(),
+                List.of(user.getRole().name()));
         return new ResponseEntity<>(Map.of("token", token), HttpStatus.OK);
     }
 }

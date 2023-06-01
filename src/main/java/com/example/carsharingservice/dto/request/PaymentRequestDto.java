@@ -1,10 +1,10 @@
 package com.example.carsharingservice.dto.request;
 
-import java.math.BigDecimal;
 import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.model.PaymentType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import java.math.BigDecimal;
 import lombok.Data;
 
 @Data

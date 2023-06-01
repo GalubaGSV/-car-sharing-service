@@ -11,11 +11,17 @@ import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
@@ -42,10 +48,11 @@ public class RentalController {
     }
 
     @GetMapping
-    public List<RentalResponseDto> getRentalsByUserIdAndStatus(@RequestParam(name = "user_id") Long id,
-                                                               @RequestParam(name = "is_active") boolean isActive,
-                                                               @RequestParam(defaultValue = "20") Integer count,
-                                                               @RequestParam(defaultValue = "0") Integer page) {
+    public List<RentalResponseDto> getRentalsByUserIdAndStatus(
+            @RequestParam(name = "user_id") Long id,
+            @RequestParam(name = "is_active") boolean isActive,
+            @RequestParam(defaultValue = "20") Integer count,
+            @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         return rentalService.getRentalsByUserIdAndStatus(id, isActive, pageRequest)
                 .stream()

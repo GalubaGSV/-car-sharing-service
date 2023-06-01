@@ -4,7 +4,6 @@ import com.example.carsharingservice.config.StripeConfig;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.service.PaymentService;
-import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.StripePaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -15,7 +14,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -24,7 +22,6 @@ public class StripePaymentServiceIml implements StripePaymentService {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
     private final PaymentService paymentService;
     private final StripeConfig stripeConfig;
-
 
     public void createPaymentSession(Payment payment) {
         Stripe.apiKey = stripeConfig.getSecretKey();
@@ -55,7 +52,9 @@ public class StripePaymentServiceIml implements StripePaymentService {
         Stripe.apiKey = stripeConfig.getSecretKey();
         Map<String, Object> params = new HashMap<>();
         params.put("unit_amount",
-                paymentService.calculatePrice(payment).multiply(BigDecimal.valueOf(100)).intValue());
+                paymentService.calculatePrice(payment)
+                        .multiply(BigDecimal.valueOf(100))
+                        .intValue());
         params.put("currency", "usd");
         params.put("product", "prod_NzsxSUBeOj0ICq");
         Price price = null;
@@ -66,4 +65,4 @@ public class StripePaymentServiceIml implements StripePaymentService {
         }
         return price.getId();
     }
- }
+}
