@@ -1,5 +1,9 @@
 package com.example.carsharingservice.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
@@ -11,10 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CarControllerTest {
@@ -51,11 +51,11 @@ public class CarControllerTest {
 
     @Test
     void testGetAll_isOk() {
-        when(carService.getAll()).thenReturn(List.of(car, secondCar));
+        when(carService.findAll(any())).thenReturn(List.of(car, secondCar));
         when(carMapper.mapToDto(car)).thenReturn(responseDto);
         when(carMapper.mapToDto(secondCar)).thenReturn(secondResponseDto);
 
-        List<CarResponseDto> responseDtos = carController.getAll();
+        List<CarResponseDto> responseDtos = carController.getAll(20, 0);
 
         assertEquals(List.of(responseDto, secondResponseDto), responseDtos);
     }
