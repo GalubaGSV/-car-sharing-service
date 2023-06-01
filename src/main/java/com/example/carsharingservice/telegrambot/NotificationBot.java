@@ -29,7 +29,8 @@ public class NotificationBot extends TelegramLongPollingBot {
         } else {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(update.getMessage().getChatId());
-            sendMessage.setText("Sorry, but I'm just a notification bot and can't communicate with you");
+            sendMessage.setText("Sorry, but I'm just a notification bot "
+                    + "and can't communicate with you");
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {

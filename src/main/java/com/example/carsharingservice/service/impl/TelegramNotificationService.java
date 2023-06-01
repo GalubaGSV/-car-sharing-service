@@ -10,12 +10,12 @@ import com.example.carsharingservice.service.mapper.DtoMapper;
 import com.example.carsharingservice.telegrambot.NotificationBot;
 import com.example.carsharingservice.telegrambot.model.TelegramChat;
 import com.example.carsharingservice.telegrambot.service.TelegramChatService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -47,9 +47,11 @@ public class TelegramNotificationService implements NotificationService {
         List<Rental> overdueRentals = rentalService.getOverdueRentals();
         if (!overdueRentals.isEmpty()) {
             for (Rental rental : overdueRentals) {
-                sendMessage(String.format(" Attention, the rental period has expired for the user: %s,\n "
+                sendMessage(String.format(" Attention, the rental period has "
+                                + "expired for the user: %s,\n "
                                 + "full rental info: %s\n "
-                        + "car info: %s", userMapper.mapToDto(rental.getUser()), rental, rental.getCar()));
+                                + "car info: %s",
+                                userMapper.mapToDto(rental.getUser()), rental, rental.getCar()));
             }
         } else {
             sendMessage("No rentals overdue today");
