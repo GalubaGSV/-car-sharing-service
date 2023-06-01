@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class NotificationBot extends TelegramLongPollingBot {
-    private static final String BOT_NAME = "car sharing service bot";
+    private static final String BOT_NAME = "Car sharing service";
     private final TelegramChatService telegramChatService;
 
     public NotificationBot(TelegramChatService telegramChatService) {
