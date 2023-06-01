@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {
@@ -21,3 +20,4 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
             "LEFT JOIN FETCH r.car " +
             "WHERE r.returnDate < :date_now AND r.actualReturnDate IS NULL")
     List<Rental> getOverdueRentals(@Param("date_now") LocalDateTime dateTime);
+}
