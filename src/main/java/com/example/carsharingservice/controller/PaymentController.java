@@ -75,11 +75,8 @@ public class PaymentController {
         payment = paymentService.add(payment);
 
         telegramNotificationService.sendMessage(String
-                .format("""
-                                New payment was created.\s
-                                Payment info: %s\s
-                                Rental info: %s """, payment,
-                        rentalMapper.mapToDto(rentalService.get(payment.getRental().getId()))
+                .format("New payment was created. \n"
+                                + "Payment info: %s \n", payment
                         ));
 
         return mapper.mapToDto(paymentService.add(payment));

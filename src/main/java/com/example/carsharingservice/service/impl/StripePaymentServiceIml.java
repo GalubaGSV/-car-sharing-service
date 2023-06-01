@@ -4,6 +4,7 @@ import com.example.carsharingservice.config.StripeConfig;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.StripePaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -21,7 +23,8 @@ import org.springframework.stereotype.Service;
 public class StripePaymentServiceIml implements StripePaymentService {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
     private final PaymentService paymentService;
-    private final StripeConfig stripeConfig = new StripeConfig();
+    private final StripeConfig stripeConfig;
+
 
     public void createPaymentSession(Payment payment) {
         Stripe.apiKey = stripeConfig.getSecretKey();
