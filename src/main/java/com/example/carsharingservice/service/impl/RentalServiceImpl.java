@@ -5,10 +5,10 @@ import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
