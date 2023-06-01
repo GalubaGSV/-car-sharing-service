@@ -6,6 +6,7 @@ import com.example.carsharingservice.service.CarService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -24,14 +25,14 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAll() {
-        return carRepository.findAll();
+    public List<Car> findAll(Pageable pageRequest) {
+        return carRepository.findAll(pageRequest).toList();
     }
 
     @Override
     public Car update(Long id, Car car) {
         Car carFromDb = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("There is no car with id: " + car.getId()));
+                () -> new EntityNotFoundException("There is no car with id: " + id));
         carFromDb.setModel(car.getModel());
         carFromDb.setBrand(car.getBrand());
         carFromDb.setInventory(car.getInventory());
