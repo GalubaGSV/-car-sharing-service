@@ -4,20 +4,12 @@ import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.service.CarService;
-import com.example.carsharingservice.service.mapper.CarMapper;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -33,8 +25,10 @@ public class CarController {
     }
 
     @GetMapping
-    public List<CarResponseDto> getAll() {
-        return carService.getAll().stream()
+    public List<CarResponseDto> getAll(@RequestParam(defaultValue = "20") Integer count,
+                                       @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageRequest = PageRequest.of(page, count);
+        return carService.findAll(pageRequest).stream()
             .map(carMapper::mapToDto)
             .toList();
     }
