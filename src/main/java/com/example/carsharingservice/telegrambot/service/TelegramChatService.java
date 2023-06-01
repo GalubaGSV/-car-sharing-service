@@ -1,8 +1,8 @@
 package com.example.carsharingservice.telegrambot.service;
 
 import com.example.carsharingservice.telegrambot.model.TelegramChat;
-import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public interface TelegramChatService {

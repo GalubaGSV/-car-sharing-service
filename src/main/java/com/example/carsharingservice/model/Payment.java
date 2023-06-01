@@ -12,12 +12,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "payments")
 public class Payment {
     @Id
@@ -32,6 +34,8 @@ public class Payment {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Rental rental;
     @Column(nullable = false)
     private String paymentUrl;
