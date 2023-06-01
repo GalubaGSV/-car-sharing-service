@@ -26,20 +26,21 @@ public class RentalController {
     private final UserService userService;
     private final TelegramNotificationService telegramNotificationService;
 
-    @PostMapping("/")
+    @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.add(rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format("New rental was created. \n" +
-                                "Rental info: %s \n" +
-                                "User info: %s \n" +
-                                "Car info: %s", createdRental,
+                .format("""
+                                New rental was created.\s
+                                Rental info: %s\s
+                                User info: %s\s
+                                Car info: %s""", createdRental,
                         userMapper.mapToDto(userService.get(createdRental.getUser().getId())),
                         carService.get(createdRental.getCar().getId())));
         return rentalMapper.mapToDto(createdRental);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<RentalResponseDto> getRentalsByUserIdAndStatus(@RequestParam(name = "user_id") Long id,
                                                                @RequestParam(name = "is_active") boolean isActive) {
         return rentalService.getRentalsByUserIdAndStatus(id, isActive)
@@ -59,10 +60,11 @@ public class RentalController {
         Rental processedRental = rentalService
                 .returnCarById(id, rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format("The car was returned. \n" +
-                                "Rental info: %s \n" +
-                                "User info: %s \n" +
-                                "Car info: %s", processedRental,
+                .format("""
+                                The car was returned.\s
+                                Rental info: %s\s
+                                User info: %s\s
+                                Car info: %s""", processedRental,
                         userMapper.mapToDto(userService.get(processedRental.getUser().getId())),
                         carService.get(processedRental.getCar().getId())));
         return rentalMapper.mapToDto(processedRental);
