@@ -2,20 +2,27 @@ package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentStatus;
+import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.StripePaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Price;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import java.math.BigDecimal;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.HashMap;
+import java.util.Map;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class StripePaymentServiceIml implements StripePaymentService {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
-    @Value("${stripe.apikey}")
-    private String stripeKey;
+    private final RentalService rentalService;
+    private final PaymentService paymentService;
+    private final String stripeKey;
 
     public void createPaymentSession(Payment payment) {
         Stripe.apiKey = stripeKey;
@@ -27,7 +34,7 @@ public class StripePaymentServiceIml implements StripePaymentService {
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
                                         .setQuantity(1L)
-                                        .setPrice("price_1NDtBGDk0xvnjfubHRroVFXE")
+                                        .setPrice(createPrice(payment))
                                         .build())
                         .build();
         Session session = null;
@@ -41,4 +48,20 @@ public class StripePaymentServiceIml implements StripePaymentService {
         payment.setPaymentSessionId(session.getId());
         payment.setPaymentUrl(session.getUrl());
     }
-}
+
+    private String createPrice(Payment payment) {
+        Stripe.apiKey = stripeKey;
+        Map<String, Object> params = new HashMap<>();
+        params.put("unit_amount",
+                paymentService.calculatePrice(payment).multiply(BigDecimal.valueOf(100)).intValue());
+        params.put("currency", "usd");
+        params.put("product", "prod_NzsxSUBeOj0ICq");
+        Price price = null;
+        try {
+            price = Price.create(params);
+        } catch (StripeException e) {
+            throw new RuntimeException("Can't create price " + e);
+        }
+        return price.getId();
+    }
+ }
