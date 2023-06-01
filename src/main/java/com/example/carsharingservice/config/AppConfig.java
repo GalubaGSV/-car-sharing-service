@@ -8,13 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 public class AppConfig {
-    @Value("${stripe.apikey}")
-    private String stripeKey;
-
-    @Bean
-    public String stripeApiKey() {
-        return stripeKey;
-    }
     @Bean
     public PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();

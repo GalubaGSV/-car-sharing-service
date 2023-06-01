@@ -12,6 +12,8 @@ import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -30,11 +32,10 @@ public class RentalController {
     public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.add(rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format("""
-                                New rental was created.\s
-                                Rental info: %s\s
-                                User info: %s\s
-                                Car info: %s""", createdRental,
+                .format(" New rental was created.\n "
+                                + "Rental info: %s\n "
+                                + "User info: %s\n "
+                                + "Car info: %s", createdRental,
                         userMapper.mapToDto(userService.get(createdRental.getUser().getId())),
                         carService.get(createdRental.getCar().getId())));
         return rentalMapper.mapToDto(createdRental);
@@ -42,8 +43,11 @@ public class RentalController {
 
     @GetMapping
     public List<RentalResponseDto> getRentalsByUserIdAndStatus(@RequestParam(name = "user_id") Long id,
-                                                               @RequestParam(name = "is_active") boolean isActive) {
-        return rentalService.getRentalsByUserIdAndStatus(id, isActive)
+                                                               @RequestParam(name = "is_active") boolean isActive,
+                                                               @RequestParam(defaultValue = "20") Integer count,
+                                                               @RequestParam(defaultValue = "0") Integer page) {
+        Pageable pageRequest = PageRequest.of(page, count);
+        return rentalService.getRentalsByUserIdAndStatus(id, isActive, pageRequest)
                 .stream()
                 .map(rentalMapper::mapToDto)
                 .toList();
@@ -58,13 +62,12 @@ public class RentalController {
     public RentalResponseDto returnCar(@PathVariable Long id,
                                        @RequestBody RentalRequestDto rentalRequestDto) {
         Rental processedRental = rentalService
-                .returnCarById(id, rentalMapper.mapToModel(rentalRequestDto));
+                .returnCar(id, rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format("""
-                                The car was returned.\s
-                                Rental info: %s\s
-                                User info: %s\s
-                                Car info: %s""", processedRental,
+                .format(" The car was returned.\n "
+                                + "Rental info: %s\n "
+                                + "User info: %s\n "
+                                + "Car info: %s", processedRental,
                         userMapper.mapToDto(userService.get(processedRental.getUser().getId())),
                         carService.get(processedRental.getCar().getId())));
         return rentalMapper.mapToDto(processedRental);

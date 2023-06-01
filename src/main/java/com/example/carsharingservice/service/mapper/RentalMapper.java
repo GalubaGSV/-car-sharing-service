@@ -19,7 +19,7 @@ public class RentalMapper implements DtoMapper<RentalRequestDto, RentalResponseD
         car.setId(dto.getCarId());
         rental.setCar(car);
         User user = new User();
-        user.setId(dto.getCarId());
+        user.setId(dto.getUserId());
         rental.setUser(user);
         return rental;
     }
