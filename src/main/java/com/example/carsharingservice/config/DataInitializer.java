@@ -20,6 +20,5 @@ public class DataInitializer {
         user.setPassword("managertest");
         user.setFirstName("bob");
         user.setLastName("bobchenko");
-        userService.save(user);
     }
 }
