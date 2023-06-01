@@ -48,7 +48,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         payment.setPaymentUrl(session.getUrl());
     }
 
-    private String createPrice(Payment payment) {
+    protected String createPrice(Payment payment) {
         Stripe.apiKey = stripeConfig.getSecretKey();
         Map<String, Object> params = new HashMap<>();
         params.put("unit_amount",
