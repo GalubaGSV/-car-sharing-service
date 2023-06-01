@@ -10,6 +10,6 @@ public class CarResponseDto {
     private String brand;
     private String carType;
     private int inventory;
-    private BigDecimal dailyFee;
+    private String dailyFee;
     private boolean deleted;
 }

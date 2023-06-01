@@ -10,6 +10,7 @@ public class UserRequestDto {
     private String email;
     private String firstName;
     private String lastName;
+    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
 }
