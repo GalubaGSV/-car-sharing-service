@@ -26,7 +26,7 @@ public class CarMapper implements DtoMapper<CarRequestDto, CarResponseDto, Car> 
         dto.setModel(car.getModel());
         dto.setBrand(car.getBrand());
         dto.setInventory(car.getInventory());
-        dto.setDailyFee(car.getDailyFee());
+        dto.setDailyFee(car.getDailyFee() + " USD");
         dto.setDeleted(car.isDeleted());
         return dto;
     }
