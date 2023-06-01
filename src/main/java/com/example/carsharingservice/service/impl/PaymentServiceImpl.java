@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -25,8 +26,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> findByRentalUserId(Long userId) {
-        return paymentRepository.findByRental_User_Id(userId);
+    public List<Payment> findByRentalUserId(Long userId, Pageable pageRequest) {
+        return paymentRepository.findByRental_User_Id(userId, pageRequest);
     }
 
     @Override
