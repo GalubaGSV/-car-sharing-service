@@ -47,11 +47,10 @@ public class TelegramNotificationService implements NotificationService {
         List<Rental> overdueRentals = rentalService.getOverdueRentals();
         if (!overdueRentals.isEmpty()) {
             for (Rental rental : overdueRentals) {
-                sendMessage(String.format(" Attention, the rental period has "
-                                + "expired for the user: %s,\n "
-                                + "full rental info: %s\n "
-                                + "car info: %s",
-                                userMapper.mapToDto(rental.getUser()), rental, rental.getCar()));
+                sendMessage(String.format(
+                        "Attention, the rental period has expired for the user: \n" +
+                        "full rental info: \n" +
+                        "car info: \n", userMapper.mapToDto(rental.getUser()), rental, rental.getCar()));
             }
         } else {
             sendMessage("No rentals overdue today");

@@ -38,10 +38,11 @@ public class RentalController {
     public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.add(rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format(" New rental was created.\n "
-                                + "Rental info: %s\n "
-                                + "User info: %s\n "
-                                + "Car info: %s", createdRental,
+                .format(
+                                "New rental was created.\n" +
+                                "Rental info: \n" +
+                                "User info: \n" +
+                                "Car info: ", createdRental,
                         userMapper.mapToDto(userService.get(createdRental.getUser().getId())),
                         carService.get(createdRental.getCar().getId())));
         return rentalMapper.mapToDto(createdRental);
@@ -71,10 +72,11 @@ public class RentalController {
         Rental processedRental = rentalService
                 .returnCar(id, rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
-                .format(" The car was returned.\n "
-                                + "Rental info: %s\n "
-                                + "User info: %s\n "
-                                + "Car info: %s", processedRental,
+                .format(
+                                "The car was returned.\n" +
+                                "Rental info: \n" +
+                                "User info: \n" +
+                                "Car info: \n", processedRental,
                         userMapper.mapToDto(userService.get(processedRental.getUser().getId())),
                         carService.get(processedRental.getCar().getId())));
         return rentalMapper.mapToDto(processedRental);
