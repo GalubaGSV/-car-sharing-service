@@ -9,6 +9,9 @@ import com.example.carsharingservice.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -59,16 +62,7 @@ public class UserController {
 
     @Operation(summary = "Update current user info", description = "Update current user info")
     @PutMapping("/me")
-    public UserResponseDto updateInfo(Authentication auth,
-                                      @Parameter(schema = @Schema(type = "String",
-                                              defaultValue = "{\n"
-                                                      + "  \"email\": \"email@gmail.com\",\n"
-                                                      + "  \"firstName\": \"Bob\",\n"
-                                                      + "  \"lastName\": \"Bobson\",\n"
-                                                      + "  \"password\": \"12345678\",\n"
-                                                      + "  \"role\": \"MANAGER\"\n"
-                                                      + "}"))
-                                      @RequestBody UserRequestDto dto) {
+    public UserResponseDto updateInfo(Authentication auth, UserRequestDto dto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         Long userId = userService.findByEmail(email)
