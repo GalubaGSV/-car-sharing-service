@@ -40,8 +40,8 @@ public class PaymentServiceImpl implements PaymentService {
         }
         Rental rental = rentalService.get(payment.getRental().getId());
         payment.setRental(rental);
-        long days = Duration.between(rental.getReturnDate(),
-                rental.getActualReturnDate()).toDays();
+        long days = Duration.between(rental.getActualReturnDate(),
+                rental.getReturnDate()).toDays();
         BigDecimal fineAmount = rental.getCar().getDailyFee().multiply(FINE_MULTIPLIER);
         return BigDecimal.valueOf(days).multiply(fineAmount);
     }
