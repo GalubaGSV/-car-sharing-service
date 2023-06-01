@@ -6,9 +6,6 @@ import com.example.carsharingservice.dto.request.StripeUserRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.model.Payment;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
@@ -19,6 +16,9 @@ import com.example.carsharingservice.service.StripePaymentService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -88,7 +88,7 @@ public class PaymentController {
     }
 
     @GetMapping("/cancel")
-    public RedirectView   returnPaymentPausedMessage() {
+    public RedirectView returnPaymentPausedMessage() {
         return new RedirectView("/cancel.html");
     }
 }

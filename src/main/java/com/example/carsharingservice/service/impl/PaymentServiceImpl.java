@@ -5,10 +5,10 @@ import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.repository.PaymentRepository;
 import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.RentalService;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
-import com.example.carsharingservice.service.RentalService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
