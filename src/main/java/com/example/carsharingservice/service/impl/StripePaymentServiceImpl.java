@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class StripePaymentServiceIml implements StripePaymentService {
+public class StripePaymentServiceImpl implements StripePaymentService {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
     private final PaymentService paymentService;
     private final StripeConfig stripeConfig;

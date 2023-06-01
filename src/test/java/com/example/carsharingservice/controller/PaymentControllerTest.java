@@ -21,10 +21,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.view.RedirectView;
-
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,6 +66,7 @@ public class PaymentControllerTest {
 
     @Test
     public void testGetUserPayments_ManagerRole_ReturnsPaymentResponseDtos() {
+        Pageable pageRequest = PageRequest.of(0, 20);
         Long userId = 1L;
         List<Payment> payments = new ArrayList<>();
         payments.add(new Payment());
@@ -75,16 +77,17 @@ public class PaymentControllerTest {
         User user = new User();
         user.setRole(Role.MANAGER);
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.of(user));
-        when(paymentService.findByRentalUserId(userId)).thenReturn(payments);
+        when(paymentService.findByRentalUserId(userId, pageRequest)).thenReturn(payments);
         when(paymentMapper.mapToDto(any(Payment.class))).thenReturn(new PaymentResponseDto());
 
-        List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth);
+        List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth, 20, 0);
 
         assertEquals(payments.size(), result.size());
     }
 
     @Test
     public void testGetUserPayments_UserRole_ReturnsPaymentResponseDtos() {
+        Pageable pageRequest = PageRequest.of(0, 20);
         Long userId = 1L;
         List<Payment> payments = new ArrayList<>();
         payments.add(new Payment());
@@ -96,10 +99,10 @@ public class PaymentControllerTest {
         user.setRole(Role.CUSTOMER);
         user.setId(userId);
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.of(user));
-        when(paymentService.findByRentalUserId(userId)).thenReturn(payments);
+        when(paymentService.findByRentalUserId(userId, pageRequest)).thenReturn(payments);
         when(paymentMapper.mapToDto(any(Payment.class))).thenReturn(new PaymentResponseDto());
 
-        List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth);
+        List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth, 20, 0);
 
         assertEquals(payments.size(), result.size());
     }
@@ -112,7 +115,7 @@ public class PaymentControllerTest {
         when(userDetails.getUsername()).thenReturn("unauthorized@example.com");
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> paymentController.getUserPayments(userId, auth));
+        assertThrows(RuntimeException.class, () -> paymentController.getUserPayments(userId, auth, 20, 0));
     }
 
     @Test
