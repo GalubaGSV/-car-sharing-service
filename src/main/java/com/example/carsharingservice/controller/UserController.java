@@ -9,6 +9,7 @@ import com.example.carsharingservice.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +43,7 @@ public class UserController {
             user.setRole(Role.valueOf(role));
             return userMapper.mapToDto(userService.update(user));
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("There is no such role!" + e);
+            throw new RuntimeException("There is no such role!", e);
         }
 
     }
@@ -52,7 +53,8 @@ public class UserController {
     public UserResponseDto get(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        return userMapper.mapToDto(userService.findByEmail(email).get());
+        return userMapper.mapToDto(userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User doesn't exist!")));
     }
 
     @Operation(summary = "Update current user info", description = "Update current user info")
@@ -69,7 +71,8 @@ public class UserController {
                                       @RequestBody UserRequestDto dto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        Long userId = userService.findByEmail(email).get().getId();
+        Long userId = userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("User doesn't exist!")).getId();
         User user = userMapper.mapToModel(dto);
         user.setId(userId);
         return userMapper.mapToDto(userService.update(user));

@@ -1,17 +1,14 @@
 package com.example.carsharingservice.controller;
 
 import com.example.carsharingservice.dto.request.PaymentRequestDto;
-import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.request.StripeUserRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
-import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.PaymentService;
-import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.StripePaymentService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
@@ -40,11 +37,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/payments")
 public class PaymentController {
     private final DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> mapper;
-    private final DtoMapper<RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
     private final PaymentService paymentService;
     private final StripePaymentService stripePaymentService;
     private final UserService userService;
-    private final RentalService rentalService;
     private final TelegramNotificationService telegramNotificationService;
 
     @Operation(summary = "Get payment by user id ", description = "Get payment by user id ")
@@ -75,8 +70,8 @@ public class PaymentController {
                     .map(mapper::mapToDto)
                     .collect(Collectors.toList());
         }
-        throw new RuntimeException("You don't have permission get all payment by id: " + userId);
-
+        throw new RuntimeException("You don't have permission "
+                + "to get all payments by id: " + userId);
     }
 
     @Operation(summary = "Create payment", description = "Create payment")
@@ -99,8 +94,8 @@ public class PaymentController {
 
         telegramNotificationService.sendMessage(String
                 .format("New payment was created. \n"
-                                + "Payment info: %s \n", payment
-                        ));
+                        + "Payment info: %s \n", payment
+                ));
 
         return mapper.mapToDto(paymentService.add(payment));
     }
