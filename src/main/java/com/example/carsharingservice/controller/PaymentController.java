@@ -16,6 +16,9 @@ import com.example.carsharingservice.service.mapper.DtoMapper;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -39,11 +42,18 @@ public class PaymentController {
     private final UserService userService;
     private final TelegramNotificationService telegramNotificationService;
 
+    @Operation(summary = "Get payment by user id ", description = "Get payment by user id ")
     @GetMapping
     public List<PaymentResponseDto> getUserPayments(
+            @Parameter(description = "User id",
+            schema = @Schema(type = "integer", defaultValue = "1"))
             @RequestParam(name = "user_id") Long userId,
             Authentication auth,
+            @Parameter(description = "Payment per page",
+            schema = @Schema(type = "integer"))
             @RequestParam(defaultValue = "20") Integer count,
+            @Parameter(description = "Page number",
+            schema = @Schema(type = "integer"))
             @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         UserDetails details = (UserDetails) auth.getPrincipal();
@@ -64,8 +74,15 @@ public class PaymentController {
                 + "to get all payments by id: " + userId);
     }
 
+    @Operation(summary = "Create payment", description = "Create payment")
     @PostMapping
-    public PaymentResponseDto addPayment(@RequestBody StripeUserRequestDto stripeUserRequestDto) {
+    public PaymentResponseDto addPayment(
+            @Parameter(schema = @Schema(type = "String",
+                    defaultValue = "{\n"
+                            + "    \"rentalId\":1,\n"
+                            + "    \"paymentType\":\"Payment\"    \n"
+                            + "}"))
+            @RequestBody StripeUserRequestDto stripeUserRequestDto) {
         Payment payment = new Payment();
         payment.setPaymentType(PaymentType.PAYMENT);
         Rental rental = new Rental();
@@ -83,11 +100,13 @@ public class PaymentController {
         return mapper.mapToDto(paymentService.add(payment));
     }
 
+    @Operation(summary = "Payment success page", description = "Payment success page")
     @GetMapping("/success")
     public RedirectView successfulStripePayments() {
         return new RedirectView("/success.html");
     }
 
+    @Operation(summary = "Payment cancel page", description = "Payment cancel page")
     @GetMapping("/cancel")
     public RedirectView returnPaymentPausedMessage() {
         return new RedirectView("/cancel.html");

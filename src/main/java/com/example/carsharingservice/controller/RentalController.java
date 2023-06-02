@@ -12,6 +12,9 @@ import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,8 +37,17 @@ public class RentalController {
     private final UserService userService;
     private final TelegramNotificationService telegramNotificationService;
 
+    @Operation(summary = "Add rental", description = "Add rental")
     @PostMapping
-    public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
+    public RentalResponseDto add(
+            @Parameter(schema = @Schema(type = "String",
+                    defaultValue = "{\n"
+                            + "    \"rentalDate\":\"2023-05-12T00:00:00.000Z\",\n"
+                            + "    \"returnDate\":\"2023-06-12T00:00:00.000Z\",    \n"
+                            + "    \"carId\":1, \n"
+                            + "    \"userId\":1\n"
+                            + "}"))
+            @RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.add(rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
                 .format(
@@ -48,11 +60,20 @@ public class RentalController {
         return rentalMapper.mapToDto(createdRental);
     }
 
+    @Operation(summary = "Get rental by user and status", description = "Get rental by user and status")
     @GetMapping
     public List<RentalResponseDto> getRentalsByUserIdAndStatus(
+            @Parameter(description = "User id",
+            schema = @Schema(type = "integer", defaultValue = "1"))
             @RequestParam(name = "user_id") Long id,
+            @Parameter(description = "Status",
+            schema = @Schema(type = "boolean", defaultValue = "true"))
             @RequestParam(name = "is_active") boolean isActive,
+            @Parameter(description = "Rental per page",
+            schema = @Schema(type = "integer"))
             @RequestParam(defaultValue = "20") Integer count,
+            @Parameter(description = "Page number",
+            schema = @Schema(type = "integer"))
             @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         return rentalService.getRentalsByUserIdAndStatus(id, isActive, pageRequest)
@@ -61,14 +82,31 @@ public class RentalController {
                 .toList();
     }
 
+    @Operation(summary = "Get rental by id", description = "Get rental by id")
     @GetMapping("/{id}")
-    public RentalResponseDto get(@PathVariable Long id) {
+    public RentalResponseDto get(
+            @Parameter(description = "Rental id",
+            schema = @Schema(type = "integer", defaultValue = "1"))
+            @PathVariable Long id) {
         return rentalMapper.mapToDto(rentalService.get(id));
     }
 
+    @Operation(summary = "Set actual return date ", description = "Set actual return date ")
     @PostMapping("/{id}/return")
-    public RentalResponseDto returnCar(@PathVariable Long id,
-                                       @RequestBody RentalRequestDto rentalRequestDto) {
+    public RentalResponseDto returnCar(
+            @Parameter(description = "Rental id",
+            schema = @Schema(type = "integer", defaultValue = "1"))
+            @PathVariable Long id,
+            @Parameter(schema = @Schema(type = "String",
+                    defaultValue = "{\n"
+                            + "  \"id\": 1,\n"
+                            + "  \"rentalDate\":\"2023-06-01T23:39:42.979Z\",\n"
+                            + "  \"returnDate\":\"2023-06-01T23:39:42.979Z\",\n"
+                            + "  \"actualReturnDate\":\"2023-06-01T23:39:42.979Z\",\n"
+                            + "  \"carId\": 1,\n"
+                            + "  \"userId\": 1\n"
+                            + "}"))
+            @RequestBody RentalRequestDto rentalRequestDto) {
         Rental processedRental = rentalService
                 .returnCar(id, rentalMapper.mapToModel(rentalRequestDto));
         telegramNotificationService.sendMessage(String
