@@ -9,6 +9,7 @@ import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.StripePaymentService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
@@ -40,6 +41,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final StripePaymentService stripePaymentService;
     private final UserService userService;
+    private final RentalService rentalService;
     private final TelegramNotificationService telegramNotificationService;
 
     @Operation(summary = "Get payment by user id ", description = "Get payment by user id ")
@@ -95,7 +97,7 @@ public class PaymentController {
         telegramNotificationService.sendMessage(String
                 .format("New payment was created. \n"
                         + "Payment info: %s \n", payment
-                ));
+                ), rentalService.get(stripeUserRequestDto.getRentalId()).getUser());
 
         return mapper.mapToDto(paymentService.add(payment));
     }
