@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
         userFromDb.setRole(user.getRole());
         userFromDb.setFirstName(user.getFirstName());
         userFromDb.setLastName(user.getLastName());
+        userFromDb.setChatId(user.getChatId());
         return userRepository.save(userFromDb);
     }
 

@@ -49,14 +49,15 @@ public class RentalController {
                             + "}"))
             @RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.add(rentalMapper.mapToModel(rentalRequestDto));
+        User userFromDb = userService.get(createdRental.getUser().getId());
         telegramNotificationService.sendMessage(String
                 .format(
                                 "New rental was created.\n"
                                         + "Rental info: %s\n"
                                         + "User info: %s\n"
                                         + "Car info: %s", rentalMapper.mapToDto(createdRental),
-                        userMapper.mapToDto(userService.get(createdRental.getUser().getId())),
-                        carService.get(createdRental.getCar().getId())), createdRental.getUser());
+                        userMapper.mapToDto(userFromDb),
+                        carService.get(createdRental.getCar().getId())), userFromDb);
         return rentalMapper.mapToDto(createdRental);
     }
 
@@ -109,14 +110,15 @@ public class RentalController {
             @RequestBody RentalRequestDto rentalRequestDto) {
         Rental processedRental = rentalService
                 .returnCar(id, rentalMapper.mapToModel(rentalRequestDto));
+        User userFromDb = userService.get(processedRental.getUser().getId());
         telegramNotificationService.sendMessage(String
                 .format(
                                 "The car was returned.\n"
                                         + "Rental info: %s\n"
                                         + "User info: %s\n"
                                         + "Car info: %s\n", rentalMapper.mapToDto(processedRental),
-                        userMapper.mapToDto(userService.get(processedRental.getUser().getId())),
-                        carService.get(processedRental.getCar().getId())), processedRental.getUser());
+                        userMapper.mapToDto(userFromDb),
+                        carService.get(processedRental.getCar().getId())), userFromDb);
         return rentalMapper.mapToDto(processedRental);
     }
 }
