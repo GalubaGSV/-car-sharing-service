@@ -33,7 +33,7 @@ public class TelegramNotificationService implements NotificationService {
 
     @Override
     public void sendMessage(String text, User user) {
-        if (user.getChatId() != null) {
+        if (user.getId() != null) {
             SendMessage message = new SendMessage();
             message.setChatId(user.getChatId());
             message.setText(text);
