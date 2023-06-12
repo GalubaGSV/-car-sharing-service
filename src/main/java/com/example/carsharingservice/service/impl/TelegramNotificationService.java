@@ -1,5 +1,6 @@
 package com.example.carsharingservice.service.impl;
 
+import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
@@ -28,7 +29,7 @@ public class TelegramNotificationService implements NotificationService {
     private final NotificationBot notificationBot;
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
     private final DtoMapper<RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
-    private final DtoMapper<RentalRequestDto, CarResponseDto, Car> carMapper;
+    private final DtoMapper<CarRequestDto, CarResponseDto, Car> carMapper;
 
     @Override
     public void sendMessage(String text, User user) {
@@ -39,7 +40,7 @@ public class TelegramNotificationService implements NotificationService {
             try {
                 notificationBot.execute(message);
             } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Can't send the message", e);
             }
         }
     }
