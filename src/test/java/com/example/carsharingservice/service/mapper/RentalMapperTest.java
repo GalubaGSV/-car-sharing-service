@@ -33,7 +33,8 @@ class RentalMapperTest {
     private static final String LASTNAME = "Alice";
     private static final String FIRSTNAME = "Bobson";
     private static final String TEST_MESSAGE = "Expected true, but was false: ";
-    private final RentalMapper rentalMapper = new RentalMapper();
+    private final DtoMapper<RentalRequestDto, RentalResponseDto, Rental> rentalMapper =
+            new RentalMapper();
     private final RentalRequestDto rentalRequestDto = getRentalRequestDto();
     private final Rental rental = getRental();
 

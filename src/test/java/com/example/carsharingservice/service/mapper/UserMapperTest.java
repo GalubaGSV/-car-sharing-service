@@ -17,7 +17,7 @@ class UserMapperTest {
     private static final String LASTNAME = "Alice";
     private static final String FIRSTNAME = "Bobson";
     private static final String TEST_MESSAGE = "Expected true, but was false: ";
-    private final UserMapper userMapper = new UserMapper();
+    private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper = new UserMapper();
     private final User user = getUser();
     private final UserRequestDto userRequestDto = getUserRequestDto();
 
