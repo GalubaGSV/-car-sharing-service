@@ -166,14 +166,13 @@ class UserServiceImplTest {
     @Test
     void testUserUpdate_notOk() {
         User notUpdatedUser = getLegalUser();
-        System.out.println(notUpdatedUser);
         User updatedUser = getLegalUser();
         updatedUser.setLastName("Alison");
         updatedUser.setFirstName("Alice");
-        System.out.println(updatedUser);
+
         given(userRepository.findById(notUpdatedUser.getId()))
                 .willThrow(EntityNotFoundException.class);
-        System.out.println(users);
+
         assertThrows(EntityNotFoundException.class, () -> userService.update(notUpdatedUser));
     }
 
