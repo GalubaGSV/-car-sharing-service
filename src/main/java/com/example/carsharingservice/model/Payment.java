@@ -29,7 +29,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentType paymentType;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_id")
     @EqualsAndHashCode.Exclude

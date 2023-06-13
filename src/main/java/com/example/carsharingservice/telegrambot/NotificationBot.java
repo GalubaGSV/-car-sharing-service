@@ -3,14 +3,15 @@ package com.example.carsharingservice.telegrambot;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import java.util.Optional;
-
-import java.util.*;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class NotificationBot extends TelegramLongPollingBot {
@@ -32,10 +33,10 @@ public class NotificationBot extends TelegramLongPollingBot {
         SendMessage messageToSend = new SendMessage();
         messageToSend.setChatId(update.getMessage().getChatId());
         if ("/start".equals(input)) {
-            messageToSend.setText("Hi!)\n I'm a notification bot, " +
-                    "write your email for authentication in one message, example: \n" +
-                    "email : bob@gmail.com, " +
-                    "password : 12345678");
+            messageToSend.setText("Hi!)\n I'm a notification bot, "
+                    + "write your email for authentication in one message, example: \n"
+                    + "email : bob@gmail.com, "
+                    + "password : 12345678");
             try {
                 execute(messageToSend);
                 return;
@@ -58,10 +59,10 @@ public class NotificationBot extends TelegramLongPollingBot {
                     messageToSend.setText("Invalid email or password");
                 }
             } else {
-                messageToSend.setText("Invalid format for sending email and password, " +
-                        "please check the example: \n" +
-                        "email : bob@gmail.com, " +
-                        "password : 12345678");
+                messageToSend.setText("Invalid format for sending email and password, "
+                        + "please check the example: \n"
+                        + "email : bob@gmail.com, "
+                        + "password : 12345678");
             }
         } else {
             messageToSend.setText("You are already authenticated");

@@ -14,12 +14,12 @@ import com.example.carsharingservice.service.StripePaymentService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +35,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Payment", description = "The Payment API. "
+        + "Contains all the operations that can be performed on a customer/manager.")
 @RequestMapping("/payments")
 public class PaymentController {
     private final DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> mapper;
@@ -46,16 +49,8 @@ public class PaymentController {
 
     @Operation(summary = "Get payment by user id ", description = "Get payment by user id ")
     @GetMapping
-    public List<PaymentResponseDto> getUserPayments(
-            @Parameter(description = "User id",
-            schema = @Schema(type = "integer", defaultValue = "1"))
-            @RequestParam(name = "user_id") Long userId,
-            Authentication auth,
-            @Parameter(description = "Payment per page",
-            schema = @Schema(type = "integer"))
-            @RequestParam(defaultValue = "20") Integer count,
-            @Parameter(description = "Page number",
-            schema = @Schema(type = "integer"))
+    public List<PaymentResponseDto> getUserPayments(@RequestParam(name = "user_id") Long userId,
+            Authentication auth, @RequestParam(defaultValue = "20") Integer count,
             @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         UserDetails details = (UserDetails) auth.getPrincipal();
@@ -78,13 +73,7 @@ public class PaymentController {
 
     @Operation(summary = "Create payment", description = "Create payment")
     @PostMapping
-    public PaymentResponseDto addPayment(
-            @Parameter(schema = @Schema(type = "String",
-                    defaultValue = "{\n"
-                            + "    \"rentalId\":1,\n"
-                            + "    \"paymentType\":\"Payment\"    \n"
-                            + "}"))
-            @RequestBody StripeUserRequestDto stripeUserRequestDto) {
+    public PaymentResponseDto addPayment(@RequestBody StripeUserRequestDto stripeUserRequestDto) {
         Payment payment = new Payment();
         payment.setPaymentType(PaymentType.PAYMENT);
         Rental rental = new Rental();

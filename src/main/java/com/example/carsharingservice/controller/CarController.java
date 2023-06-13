@@ -5,10 +5,10 @@ import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
-import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,35 +25,24 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/cars")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Car", description = "The Car API. "
+        + "Contains the operations that can be performed on a customer/manager.")
 public class CarController {
     private final CarService carService;
     private final DtoMapper<CarRequestDto, CarResponseDto, Car> carMapper;
 
     @Operation(summary = "Add car", description = "Creation of the essence of the car")
     @PostMapping
-    public CarResponseDto add(
-            @Parameter(schema = @Schema(type = "String",
-                    defaultValue = "{\n"
-                            + "    \"model\":\"X\", \n"
-                            + "    \"brand\":\"Tesla\", \n"
-                            + "    \"carType\":\"UNIVERSAL\",\n"
-                            + "    \"inventory\":10, \n"
-                            + "    \"dailyFee\":100\n"
-                            + "}"))
-            @RequestBody CarRequestDto requestDto) {
+    public CarResponseDto add(@RequestBody CarRequestDto requestDto) {
         Car car = carService.add(carMapper.mapToModel(requestDto));
         return carMapper.mapToDto(car);
     }
 
     @Operation(summary = "Get all car", description = "List of all car")
     @GetMapping
-    public List<CarResponseDto> getAll(
-            @Parameter(description = "Car per page",
-            schema = @Schema(type = "integer"))
-            @RequestParam(defaultValue = "20") Integer count,
-            @Parameter(description = "Coun of page",
-            schema = @Schema(type = "integer"))
-            @RequestParam(defaultValue = "0") Integer page) {
+    public List<CarResponseDto> getAll(@RequestParam(defaultValue = "20") Integer count,
+                                       @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         return carService.findAll(pageRequest).stream()
             .map(carMapper::mapToDto)
@@ -62,27 +51,13 @@ public class CarController {
 
     @Operation(summary = "Get car by id", description = "Get car by id")
     @GetMapping("/{id}")
-    public CarResponseDto get(
-            @Parameter(description = "Car id",
-            schema = @Schema(type = "integer", defaultValue = "1"))
-            @PathVariable Long id) {
+    public CarResponseDto get(@PathVariable Long id) {
         return carMapper.mapToDto(carService.get(id));
     }
 
     @Operation(summary = "Update car by id", description = "Update car by id")
     @PatchMapping("/{id}")
-    public CarResponseDto update(
-            @Parameter(description = "Car id",
-            schema = @Schema(type = "integer", defaultValue = "1"))
-            @PathVariable Long id,
-            @Parameter(schema = @Schema(type = "String",
-                    defaultValue = "{\n"
-                            + "    \"model\":\"X\", \n"
-                            + "    \"brand\":\"Tesla\", \n"
-                            + "    \"carType\":\"UNIVERSAL\",\n"
-                            + "    \"inventory\":10, \n"
-                            + "    \"dailyFee\":100\n"
-                            + "}"))
+    public CarResponseDto update(@PathVariable Long id,
             @RequestBody CarRequestDto requestDto) {
         Car car = carService.update(id, carMapper.mapToModel(requestDto));
         return carMapper.mapToDto(car);
@@ -90,10 +65,7 @@ public class CarController {
 
     @Operation(summary = "Delete car by id", description = "Delete car by id")
     @DeleteMapping("/{id}")
-    public void delete(
-            @Parameter(description = "Car id",
-            schema = @Schema(type = "integer", defaultValue = "1"))
-            @PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         carService.delete(id);
     }
 }
