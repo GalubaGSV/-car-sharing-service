@@ -148,7 +148,7 @@ class UserServiceImplTest {
     @Test
     void testUserUpdate_ok() {
         User notUpdatedUser = getLegalUser();
-        System.out.println(notUpdatedUser);
+
         User updatedUser = getLegalUser();
         updatedUser.setLastName("Alison");
         updatedUser.setFirstName("Alice");
