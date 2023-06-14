@@ -5,7 +5,6 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
-
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
