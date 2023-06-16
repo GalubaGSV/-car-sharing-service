@@ -80,16 +80,16 @@ public class RentalController {
     @Operation(summary = "Set actual return date ", description = "Set actual return date ")
     @PostMapping("/{id}/return")
     public RentalResponseDto returnCar(@PathVariable Long id,
-                                       @RequestBody RentalRequestDto rentalRequestDto) {
+            @RequestBody RentalRequestDto rentalRequestDto) {
         Rental processedRental = rentalService
                 .returnCar(id, rentalMapper.mapToModel(rentalRequestDto));
         User userFromDb = userService.get(processedRental.getUser().getId());
         telegramNotificationService.sendMessage(String
                 .format(
-                        "The car was returned.\n"
-                                + "Rental info: %s\n"
-                                + "User info: %s\n"
-                                + "Car info: %s\n", rentalMapper.mapToDto(processedRental),
+                                "The car was returned.\n"
+                                        + "Rental info: %s\n"
+                                        + "User info: %s\n"
+                                        + "Car info: %s\n", rentalMapper.mapToDto(processedRental),
                         userMapper.mapToDto(userFromDb),
                         carService.get(processedRental.getCar().getId())), userFromDb);
         return rentalMapper.mapToDto(processedRental);
