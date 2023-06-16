@@ -1,5 +1,6 @@
 package com.example.carsharingservice.stripepaymant;
 
+import com.example.carsharingservice.dto.response.StripePaymentSessionResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.service.PaymentService;
@@ -16,12 +17,12 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class StripePaymentProdiverImpl implements StripePaymentProvider {
+public class StripePaymentProviderImpl implements StripePaymentProvider {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
     private final PaymentService paymentService;
     private final StripeProperties stripeProperties;
 
-    public void createPaymentSession(Payment payment) {
+    public StripePaymentSessionResponseDto createPaymentSession(Payment payment) {
         Stripe.apiKey = stripeProperties.getSecretKey();
         SessionCreateParams params =
                 SessionCreateParams.builder()
@@ -44,6 +45,11 @@ public class StripePaymentProdiverImpl implements StripePaymentProvider {
         payment.setPaymentAmount(BigDecimal.valueOf(session.getAmountTotal() / 100));
         payment.setPaymentSessionId(session.getId());
         payment.setPaymentUrl(session.getUrl());
+        StripePaymentSessionResponseDto stripePaymentSessionResponseDto =
+                new StripePaymentSessionResponseDto();
+        stripePaymentSessionResponseDto.setId(payment.getPaymentSessionId());
+        stripePaymentSessionResponseDto.setUrl(payment.getPaymentUrl());
+        return stripePaymentSessionResponseDto;
     }
 
     private String createPrice(Payment payment) {
