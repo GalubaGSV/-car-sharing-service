@@ -1,7 +1,7 @@
-package com.example.carsharingservice.service;
+package com.example.carsharingservice.stripepaymant;
 
 import com.example.carsharingservice.model.Payment;
 
-public interface StripePaymentService {
+public interface StripePaymentProvider {
     void createPaymentSession(Payment payment);
 }
