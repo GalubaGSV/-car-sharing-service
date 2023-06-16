@@ -4,9 +4,9 @@ import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.Rental;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class PaymentMapper implements DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> {
     @Override
     public Payment mapToModel(PaymentRequestDto dto) {

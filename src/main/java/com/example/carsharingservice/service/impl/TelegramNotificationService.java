@@ -1,15 +1,19 @@
 package com.example.carsharingservice.service.impl;
 
+import com.example.carsharingservice.dto.request.CarRequestDto;
+import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.request.UserRequestDto;
+import com.example.carsharingservice.dto.response.CarResponseDto;
+import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
+import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.NotificationService;
 import com.example.carsharingservice.service.RentalService;
+import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import com.example.carsharingservice.telegrambot.NotificationBot;
-import com.example.carsharingservice.telegrambot.model.TelegramChat;
-import com.example.carsharingservice.telegrambot.service.TelegramChatService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,23 +25,22 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Service
 public class TelegramNotificationService implements NotificationService {
     private final RentalService rentalService;
-    private final TelegramChatService telegramChatService;
+    private final UserService userService;
     private final NotificationBot notificationBot;
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
+    private final DtoMapper<RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
+    private final DtoMapper<CarRequestDto, CarResponseDto, Car> carMapper;
 
     @Override
-    public void sendMessage(String text) {
-        List<TelegramChat> telegramChats = telegramChatService.getAll();
-        if (!telegramChats.isEmpty()) {
-            for (TelegramChat chat : telegramChats) {
-                SendMessage message = new SendMessage();
-                message.setChatId(chat.getChatId());
-                message.setText(text);
-                try {
-                    notificationBot.execute(message);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
-                }
+    public void sendMessage(String text, User user) {
+        if (user.getChatId() != null) {
+            SendMessage message = new SendMessage();
+            message.setChatId(user.getChatId());
+            message.setText(text);
+            try {
+                notificationBot.execute(message);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException("Can't send the message", e);
             }
         }
     }
@@ -48,13 +51,17 @@ public class TelegramNotificationService implements NotificationService {
         if (!overdueRentals.isEmpty()) {
             for (Rental rental : overdueRentals) {
                 sendMessage(String.format(
-                        "Attention, the rental period has expired for the user: \n"
-                                + "full rental info: \n"
-                                + "car info: \n", userMapper.mapToDto(rental.getUser()),
-                        rental, rental.getCar()));
+                        "Attention, the rental period has expired for you: %s \n"
+                                + "full rental info: %s \n"
+                                + "car info: %s \n", userMapper.mapToDto(rental.getUser()),
+                        rentalMapper.mapToDto(rental), carMapper.mapToDto(rental.getCar())),
+                        rental.getUser());
             }
         } else {
-            sendMessage("No rentals overdue today");
+            List<User> usersWithChatId = userService.findAllWithChatId();
+            for (User user : usersWithChatId) {
+                sendMessage("No rentals overdue today", user);
+            }
         }
     }
 }

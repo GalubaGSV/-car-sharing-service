@@ -28,4 +28,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @Column(name = "chat_id", unique = true)
+    private Long chatId;
 }

@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
     private static final int BEARER_LENGTH = 7;
-
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey;
     @Value("${security.jwt.token.expire-length:3600000}")

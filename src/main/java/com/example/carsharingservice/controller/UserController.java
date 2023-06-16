@@ -7,6 +7,8 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,18 +29,16 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/users")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "User", description = "The User API. "
+        + "Contains all the operations that can be performed on a customer/manager.")
 public class UserController {
     private final UserService userService;
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @Operation(summary = "Update user role", description = "Update user role")
     @PutMapping("/{id}/role")
-    public UserResponseDto updateRole(
-            @Parameter(description = "User id",
-            schema = @Schema(type = "integer", defaultValue = "1"))
-            @PathVariable Long id,
-            @Parameter(description = "User role (Customer, Manager)",
-            schema = @Schema(type = "string", defaultValue = "Customer"))
+    public UserResponseDto updateRole(@PathVariable Long id,
             @RequestParam String role) {
         try {
             Role.valueOf(role);
@@ -48,7 +48,6 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("There is no such role!", e);
         }
-
     }
 
     @Operation(summary = "Get current user info", description = "Get current user info")
@@ -62,7 +61,8 @@ public class UserController {
 
     @Operation(summary = "Update current user info", description = "Update current user info")
     @PutMapping("/me")
-    public UserResponseDto updateInfo(Authentication auth, UserRequestDto dto) {
+    public UserResponseDto updateInfo(Authentication auth,
+                                      @RequestBody UserRequestDto dto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         Long userId = userService.findByEmail(email)

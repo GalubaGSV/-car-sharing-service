@@ -24,7 +24,6 @@ class RentalServiceImplTest {
     @Mock
     private CarService carService;
 
-
     @Test
     void testAddRental_ok() {
         Car bookedCar = new Car();

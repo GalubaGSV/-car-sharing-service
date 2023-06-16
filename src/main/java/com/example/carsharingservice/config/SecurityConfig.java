@@ -38,9 +38,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                        auth.requestMatchers(HttpMethod.POST,"/register",
-                                       "/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-                               .requestMatchers(HttpMethod.GET, "/test",
-                                       "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                                       "/login", "/swagger-ui/**",
+                                       "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                               .requestMatchers(HttpMethod.GET, "/health-check",
+                                       "/cars", "/swagger-ui/**",
+                                       "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                                .requestMatchers(HttpMethod.POST, "/cars",
                                        "/rentals/{id}/return").hasRole("MANAGER")
                                .requestMatchers(HttpMethod.POST, "/rentals",
