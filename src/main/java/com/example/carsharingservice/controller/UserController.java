@@ -34,7 +34,7 @@ public class UserController {
     @Operation(summary = "Update user role", description = "Update user role")
     @PutMapping("/{id}/role")
     public UserResponseDto updateRole(@PathVariable Long id,
-                                      @RequestParam String role) {
+            @RequestParam String role) {
         try {
             Role.valueOf(role);
             User user = userService.get(id);
