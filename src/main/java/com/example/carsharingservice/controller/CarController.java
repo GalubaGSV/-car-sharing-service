@@ -58,7 +58,7 @@ public class CarController {
     @Operation(summary = "Update car by id", description = "Update car by id")
     @PatchMapping("/{id}")
     public CarResponseDto update(@PathVariable Long id,
-             @RequestBody CarRequestDto requestDto) {
+            @RequestBody CarRequestDto requestDto) {
         Car car = carService.update(id, carMapper.mapToModel(requestDto));
         return carMapper.mapToDto(car);
     }
