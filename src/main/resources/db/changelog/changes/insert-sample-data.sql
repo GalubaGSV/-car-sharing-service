@@ -1,6 +1,5 @@
 --liquibase formatted sql
 
-
 --changeset galuba:id1
 INSERT INTO users (id, email, first_name, last_name, password, role, chat_id)
 VALUES (1, 'bob@gmail.com', 'Bob', 'Bobson', '$2a$10$vXmLsNp9QXjRrszQ.511qeTCH2BVxD/Qu8VU/HufkZzYL/Qd0AAsC', 'MANAGER', null);
@@ -10,7 +9,6 @@ VALUES (1, 'bob@gmail.com', 'Bob', 'Bobson', '$2a$10$vXmLsNp9QXjRrszQ.511qeTCH2B
 INSERT INTO users (id, email, first_name, last_name, password, role, chat_id)
 VALUES (2, 'alice@gmail.com', 'Alice', 'Alison', '$2a$10$vXmLsNp9QXjRrszQ.511qeTCH2BVxD/Qu8VU/HufkZzYL/Qd0AAsC', 'CUSTOMER', null);
 --rollback DELETE FROM users WHERE id = 2;
-
 
 
 --changeset galuba:id3
@@ -27,7 +25,6 @@ VALUES (2, 'C257', 'Mercedes', 'SEDAN', 10, 200, false);
 INSERT INTO cars (id, model, brand, car_type, inventory, daily_fee, deleted)
 VALUES (3, 'X5', 'BMW ', 'SEDAN', 10, 200, false);
 --rollback DELETE FROM cars WHERE id = 2;
-
 
 
 --changeset galuba:id6
