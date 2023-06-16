@@ -51,7 +51,7 @@ public class PaymentController {
     @GetMapping
     public List<PaymentResponseDto> getUserPayments(@RequestParam(name = "user_id") Long userId,
            Authentication auth, @RequestParam(defaultValue = "20") Integer count,
-                                                    @RequestParam(defaultValue = "0") Integer page) {
+           @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
