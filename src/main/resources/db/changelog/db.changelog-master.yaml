@@ -9,3 +9,5 @@ databaseChangeLog:
       file: /db/changelog/changes/create-payments_table.sql
   - include:
       file: /db/changelog/changes/change-payment_url_colum-payments_table.sql
+  - include:
+      file: /db/changelog/changes/insert-sample-data.sql
