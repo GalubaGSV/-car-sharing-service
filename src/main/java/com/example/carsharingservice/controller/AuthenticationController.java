@@ -9,6 +9,8 @@ import com.example.carsharingservice.security.AuthenticationService;
 import com.example.carsharingservice.security.jwt.JwtTokenProvider;
 import com.example.carsharingservice.service.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,14 @@ public class AuthenticationController {
     @Operation(summary = "Data for registration", description = "Data for registration")
     @PostMapping("/register")
     public UserResponseDto register(
+            @Parameter(schema = @Schema(type = "String",
+                    defaultValue = "{\n"
+                            + "    \"email\":\"bob1@gmail.com\", \n"
+                            + "    \"password\":\"12345678\", \n"
+                            + "    \"repeatPassword\":\"12345678\", \n"
+                            + "    \"firstName\":\"Bob\", \n"
+                            + "    \"lastName\":\"Bobson\"\n"
+                            + "}"))
             @RequestBody @Valid UserRegistrationDto dto)
             throws AuthenticationException {
         User user = authenticationService.register(dto.getEmail(), dto.getPassword(),
@@ -39,6 +49,11 @@ public class AuthenticationController {
     @Operation(summary = "Data for login", description = "Data for login")
     @PostMapping("/login")
     public ResponseEntity<Object> login(
+            @Parameter(schema = @Schema(type = "String",
+                    defaultValue = "{\n"
+                            + "    \"login\":\"bob1@gmail.com\",\n"
+                            + "    \"password\":\"12345678\"\n"
+                            + "}"))
             @RequestBody @Valid UserLoginDto dto)
             throws AuthenticationException {
         User user = authenticationService.login(dto.getLogin(),
