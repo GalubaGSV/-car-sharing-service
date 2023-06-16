@@ -45,8 +45,8 @@ public class CarController {
                                        @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
         return carService.findAll(pageRequest).stream()
-                .map(carMapper::mapToDto)
-                .toList();
+            .map(carMapper::mapToDto)
+            .toList();
     }
 
     @Operation(summary = "Get car by id", description = "Get car by id")
