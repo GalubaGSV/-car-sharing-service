@@ -47,10 +47,10 @@ public class RentalController {
         User userFromDb = userService.get(createdRental.getUser().getId());
         telegramNotificationService.sendMessage(String
                 .format(
-                        "New rental was created.\n"
-                                + "Rental info: %s\n"
-                                + "User info: %s\n"
-                                + "Car info: %s", rentalMapper.mapToDto(createdRental),
+                                "New rental was created.\n"
+                                        + "Rental info: %s\n"
+                                        + "User info: %s\n"
+                                        + "Car info: %s", rentalMapper.mapToDto(createdRental),
                         userMapper.mapToDto(userFromDb),
                         carService.get(createdRental.getCar().getId())), userFromDb);
         return rentalMapper.mapToDto(createdRental);
