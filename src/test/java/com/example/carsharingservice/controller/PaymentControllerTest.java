@@ -51,7 +51,6 @@ public class PaymentControllerTest {
     private Authentication auth;
     @Mock
     private UserDetails userDetails;
-
     @InjectMocks
     private PaymentController paymentController;
 
@@ -67,7 +66,6 @@ public class PaymentControllerTest {
         List<Payment> payments = new ArrayList<>();
         payments.add(new Payment());
         payments.add(new Payment());
-
         when(auth.getPrincipal()).thenReturn(userDetails);
         when(userDetails.getUsername()).thenReturn("manager@example.com");
         User user = new User();
@@ -75,9 +73,7 @@ public class PaymentControllerTest {
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.of(user));
         when(paymentService.findByRentalUserId(userId, pageRequest)).thenReturn(payments);
         when(paymentMapper.mapToDto(any(Payment.class))).thenReturn(new PaymentResponseDto());
-
         List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth, 20, 0);
-
         assertEquals(payments.size(), result.size());
     }
 
@@ -88,7 +84,6 @@ public class PaymentControllerTest {
         List<Payment> payments = new ArrayList<>();
         payments.add(new Payment());
         payments.add(new Payment());
-
         when(auth.getPrincipal()).thenReturn(userDetails);
         when(userDetails.getUsername()).thenReturn("user@example.com");
         User user = new User();
@@ -97,9 +92,7 @@ public class PaymentControllerTest {
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.of(user));
         when(paymentService.findByRentalUserId(userId, pageRequest)).thenReturn(payments);
         when(paymentMapper.mapToDto(any(Payment.class))).thenReturn(new PaymentResponseDto());
-
         List<PaymentResponseDto> result = paymentController.getUserPayments(userId, auth, 20, 0);
-
         assertEquals(payments.size(), result.size());
     }
 
@@ -110,19 +103,18 @@ public class PaymentControllerTest {
         when(auth.getPrincipal()).thenReturn(userDetails);
         when(userDetails.getUsername()).thenReturn("unauthorized@example.com");
         when(userService.findByEmail(anyString())).thenReturn(java.util.Optional.empty());
-
         assertThrows(RuntimeException.class, () -> paymentController.getUserPayments(userId, auth, 20, 0));
     }
 
     @Test
-    public void testSuccessfulStripePayments_ReturnsRedirectView() {
-        RedirectView redirectView = paymentController.successfulStripePayments();
-        assertEquals("/success.html", redirectView.getUrl());
+    public void testSuccessfulStripePayments_ReturnsSuccessPaymentString() {
+        String result = paymentController.successfulStripePayments();
+        assertEquals("Success payment", result);
     }
 
     @Test
-    public void testReturnPaymentPausedMessage_ReturnsRedirectView() {
-        RedirectView redirectView = paymentController.returnPaymentPausedMessage();
-        assertEquals("/cancel.html", redirectView.getUrl());
+    public void testReturnPaymentPausedMessage_ReturnsCancelPaymentString() {
+        String result = paymentController.returnPaymentPausedMessage();
+        assertEquals("Cancel payment", result);
     }
 }

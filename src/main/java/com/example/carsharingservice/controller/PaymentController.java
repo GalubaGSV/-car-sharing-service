@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 @RequiredArgsConstructor
 @RestController
@@ -90,13 +89,13 @@ public class PaymentController {
 
     @Operation(summary = "Payment success page", description = "Payment success page")
     @GetMapping("/success")
-    public RedirectView successfulStripePayments() {
-        return new RedirectView("/success.html");
+    public String successfulStripePayments() {
+        return "Success payment";
     }
 
     @Operation(summary = "Payment cancel page", description = "Payment cancel page")
     @GetMapping("/cancel")
-    public RedirectView returnPaymentPausedMessage() {
-        return new RedirectView("/cancel.html");
+    public String returnPaymentPausedMessage() {
+        return "Cancel payment";
     }
 }

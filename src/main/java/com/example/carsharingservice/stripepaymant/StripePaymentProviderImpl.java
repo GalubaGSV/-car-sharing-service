@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class StripePaymentProviderImpl implements StripePaymentProvider {
-    private static final String YOUR_DOMAIN = "http://localhost:4242";
+    private static final String YOUR_DOMAIN = "http://localhost:8080";
     private final PaymentService paymentService;
     private final StripeProperties stripeProperties;
 
@@ -27,8 +27,8 @@ public class StripePaymentProviderImpl implements StripePaymentProvider {
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setSuccessUrl(YOUR_DOMAIN + "/success.html")
-                        .setCancelUrl(YOUR_DOMAIN + "/cancel.html")
+                        .setSuccessUrl(YOUR_DOMAIN + "/payments/success")
+                        .setCancelUrl(YOUR_DOMAIN + "/payments/cancel")
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
                                         .setQuantity(1L)
