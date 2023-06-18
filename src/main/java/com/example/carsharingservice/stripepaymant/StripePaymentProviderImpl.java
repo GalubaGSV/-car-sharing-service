@@ -1,10 +1,9 @@
-package com.example.carsharingservice.service.impl;
+package com.example.carsharingservice.stripepaymant;
 
-import com.example.carsharingservice.config.StripeConfig;
+import com.example.carsharingservice.dto.response.StripePaymentSessionResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.service.PaymentService;
-import com.example.carsharingservice.service.StripePaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
@@ -18,13 +17,13 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class StripePaymentServiceImpl implements StripePaymentService {
+public class StripePaymentProviderImpl implements StripePaymentProvider {
     private static final String YOUR_DOMAIN = "http://localhost:4242";
     private final PaymentService paymentService;
-    private final StripeConfig stripeConfig;
+    private final StripeProperties stripeProperties;
 
-    public void createPaymentSession(Payment payment) {
-        Stripe.apiKey = stripeConfig.getSecretKey();
+    public StripePaymentSessionResponseDto createPaymentSession(Payment payment) {
+        Stripe.apiKey = stripeProperties.getSecretKey();
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
@@ -46,10 +45,15 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         payment.setPaymentAmount(BigDecimal.valueOf(session.getAmountTotal() / 100));
         payment.setPaymentSessionId(session.getId());
         payment.setPaymentUrl(session.getUrl());
+        StripePaymentSessionResponseDto stripePaymentSessionResponseDto =
+                new StripePaymentSessionResponseDto();
+        stripePaymentSessionResponseDto.setId(payment.getPaymentSessionId());
+        stripePaymentSessionResponseDto.setUrl(payment.getPaymentUrl());
+        return stripePaymentSessionResponseDto;
     }
 
     private String createPrice(Payment payment) {
-        Stripe.apiKey = stripeConfig.getSecretKey();
+        Stripe.apiKey = stripeProperties.getSecretKey();
         Map<String, Object> params = new HashMap<>();
         params.put("unit_amount",
                 paymentService.calculatePrice(payment)

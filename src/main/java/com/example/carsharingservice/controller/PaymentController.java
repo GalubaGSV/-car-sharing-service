@@ -10,10 +10,10 @@ import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.RentalService;
-import com.example.carsharingservice.service.StripePaymentService;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
+import com.example.carsharingservice.stripepaymant.StripePaymentProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +42,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PaymentController {
     private final DtoMapper<PaymentRequestDto, PaymentResponseDto, Payment> mapper;
     private final PaymentService paymentService;
-    private final StripePaymentService stripePaymentService;
+    private final StripePaymentProvider stripePaymentProvider;
     private final UserService userService;
     private final RentalService rentalService;
     private final TelegramNotificationService telegramNotificationService;
@@ -79,15 +79,12 @@ public class PaymentController {
         Rental rental = new Rental();
         rental.setId(stripeUserRequestDto.getRentalId());
         payment.setRental(rental);
-        stripePaymentService.createPaymentSession(payment);
-
+        stripePaymentProvider.createPaymentSession(payment);
         payment = paymentService.add(payment);
-
         telegramNotificationService.sendMessage(String
                 .format("New payment was created. \n"
                         + "Payment info: %s \n", payment
                 ), rentalService.get(stripeUserRequestDto.getRentalId()).getUser());
-
         return mapper.mapToDto(paymentService.add(payment));
     }
 
