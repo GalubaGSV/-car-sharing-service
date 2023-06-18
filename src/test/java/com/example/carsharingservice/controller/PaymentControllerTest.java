@@ -2,17 +2,15 @@ package com.example.carsharingservice.controller;
 
 import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.request.RentalRequestDto;
-import com.example.carsharingservice.dto.request.StripeUserRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.model.Payment;
-import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.PaymentService;
 import com.example.carsharingservice.service.RentalService;
-import com.example.carsharingservice.service.StripePaymentService;
+import com.example.carsharingservice.stripepaymant.StripePaymentProvider;
 import com.example.carsharingservice.service.UserService;
 import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import com.example.carsharingservice.service.mapper.DtoMapper;
@@ -28,8 +26,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -44,7 +40,7 @@ public class PaymentControllerTest {
     @Mock
     private PaymentService paymentService;
     @Mock
-    private StripePaymentService stripePaymentService;
+    private StripePaymentProvider stripePaymentProvider;
     @Mock
     private UserService userService;
     @Mock

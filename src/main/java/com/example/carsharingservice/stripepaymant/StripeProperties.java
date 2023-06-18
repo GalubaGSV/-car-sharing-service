@@ -1,19 +1,14 @@
-package com.example.carsharingservice.config;
+package com.example.carsharingservice.stripepaymant;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 @Getter
-@Setter
 @PropertySource("classpath:application.properties")
-public class StripeConfig {
-    @Value("${stripe.apikey}")
-    private String stripeKey;
-
+public class StripeProperties {
     @Value("${stripe.apikey}")
     private String secretKey;
 }
