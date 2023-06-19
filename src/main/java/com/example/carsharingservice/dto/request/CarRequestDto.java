@@ -1,6 +1,6 @@
 package com.example.carsharingservice.dto.request;
 
-import com.example.carsharingservice.model.CarType;
+import com.example.carsharingservice.model.Car;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,7 +16,7 @@ public class CarRequestDto {
     private String brand;
     @Enumerated(EnumType.STRING)
     @Schema(example = "UNIVERSAL")
-    private CarType carType;
+    private Car.CarType carType;
     @Schema(example = "10")
     private int inventory;
     @Schema(example = "100")
