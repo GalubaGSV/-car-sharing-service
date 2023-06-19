@@ -27,8 +27,10 @@ public class StripePaymentProviderImpl implements StripePaymentProvider {
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
+
                         .setSuccessUrl(YOUR_DOMAIN + "/payments/success")
                         .setCancelUrl(YOUR_DOMAIN + "/payments/cancel")
+
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
                                         .setQuantity(1L)
