@@ -39,5 +39,5 @@ VALUES (2, '2023-05-15 21:00:00', '2023-06-11 21:00:00 ', null, 2, 2);
 
 --changeset galuba:id8
 INSERT INTO rentals (id, rental_date, return_date, actual_return_date, car_id, user_id)
-VALUES (3, '2023-05-15 21:00:00', '2023-06-20 21:00:00 ', null, 3, 2);
+VALUES (3, '2023-05-15 21:00:00', '2023-06-20 21:00:00 ', '2023-07-20 21:00:00', 3, 2);
 --rollback DELETE FROM rentals WHERE id = 3;
