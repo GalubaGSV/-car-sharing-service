@@ -27,10 +27,8 @@ public class StripePaymentProviderImpl implements StripePaymentProvider {
         SessionCreateParams params =
                 SessionCreateParams.builder()
                         .setMode(SessionCreateParams.Mode.PAYMENT)
-
                         .setSuccessUrl(YOUR_DOMAIN + "/payments/success")
                         .setCancelUrl(YOUR_DOMAIN + "/payments/cancel")
-
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
                                         .setQuantity(1L)
@@ -39,7 +37,7 @@ public class StripePaymentProviderImpl implements StripePaymentProvider {
                         .build();
         Session session = null;
         try {
-            session = Session.create(params);
+            session = Session.create(p  arams);
         } catch (StripeException e) {
             throw new RuntimeException("Can't create payment connection ", e);
         }

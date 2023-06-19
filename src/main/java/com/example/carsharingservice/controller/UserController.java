@@ -36,7 +36,6 @@ public class UserController {
     public UserResponseDto updateRole(@PathVariable Long id,
             @RequestParam String role) {
         try {
-            Role.valueOf(role);
             User user = userService.get(id);
             user.setRole(Role.valueOf(role));
             return userMapper.mapToDto(userService.update(user));
