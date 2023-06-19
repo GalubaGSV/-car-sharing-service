@@ -1,8 +1,8 @@
 package com.example.carsharingservice.strategy;
 
+import com.example.carsharingservice.model.Rental;
 import java.math.BigDecimal;
 import java.time.Duration;
-import com.example.carsharingservice.model.Rental;
 import org.springframework.stereotype.Component;
 
 @Component

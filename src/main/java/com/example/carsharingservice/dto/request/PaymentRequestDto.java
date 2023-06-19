@@ -1,7 +1,6 @@
 package com.example.carsharingservice.dto.request;
 
-import com.example.carsharingservice.model.PaymentStatus;
-import com.example.carsharingservice.model.PaymentType;
+import com.example.carsharingservice.model.Payment;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,10 +12,10 @@ import lombok.Data;
 public class PaymentRequestDto {
     @Enumerated(EnumType.STRING)
     @Schema(example = "Pending")
-    private PaymentStatus paymentStatus;
+    private Payment.PaymentStatus paymentStatus;
     @Enumerated(EnumType.STRING)
     @Schema(example = "Payment")
-    private PaymentType paymentType;
+    private Payment.PaymentType paymentType;
     @Schema(example = "1")
     private Long rentalId;
     @Schema(example = "http://payments/success")

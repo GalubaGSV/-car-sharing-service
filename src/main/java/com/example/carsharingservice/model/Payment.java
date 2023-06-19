@@ -1,5 +1,6 @@
 package com.example.carsharingservice.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 @Entity
@@ -40,4 +42,36 @@ public class Payment {
     private String paymentSessionId;
     @Column(nullable = false)
     private BigDecimal paymentAmount;
+
+    @Getter
+    public enum PaymentStatus {
+        PENDING("Pending"),
+        PAID("Paid");
+        private final String value;
+
+        PaymentStatus(String value) {
+            this.value = value;
+        }
+    }
+
+    @Getter
+    public enum PaymentType {
+        PAYMENT("Payment"),
+        FINE("Fine");
+        private final String value;
+
+        PaymentType(String value) {
+            this.value = value;
+        }
+
+        @JsonCreator
+        public static PaymentType fromValue(String value) {
+            for (PaymentType type : PaymentType.values()) {
+                if (type.value.equalsIgnoreCase(value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Invalid PaymentType value: " + value);
+        }
+    }
 }

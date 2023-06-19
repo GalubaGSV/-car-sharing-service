@@ -4,7 +4,6 @@ import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.request.StripeUserRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
-import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
@@ -74,7 +73,8 @@ public class PaymentController {
     @PostMapping
     public PaymentResponseDto addPayment(@RequestBody StripeUserRequestDto stripeUserRequestDto) {
         Payment payment = new Payment();
-        payment.setPaymentType(PaymentType.valueOf(stripeUserRequestDto.getPaymentType().toUpperCase()));
+        payment.setPaymentType(Payment.PaymentType
+                .valueOf(stripeUserRequestDto.getPaymentType().toUpperCase()));
         Rental rental = new Rental();
         rental.setId(stripeUserRequestDto.getRentalId());
         payment.setRental(rental);
