@@ -19,7 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -39,8 +38,6 @@ class UserServiceImplTest {
     private static final Role LEGAL_ROLE = Role.CUSTOMER;
     @InjectMocks
     private UserServiceImpl userService;
-    @Mock
-    private PasswordEncoder passwordEncoder;
     @Mock
     private UserRepository userRepository;
 
@@ -137,9 +134,9 @@ class UserServiceImplTest {
         userThree.setId(LEGAL_USER_ID + 2L);
         userThree.setChatId(null);
 
-        given(userRepository.findAllWithChatId()).willReturn(List.of(userOne, userTwo));
+        given(userRepository.findByChatIdIsNotNull()).willReturn(List.of(userOne, userTwo));
 
-        List<User> userList = userService.findAllWithChatId();
+        List<User> userList = userService.findByChatIdIsNotNull();
 
         assertNotNull(userList);
         assertEquals(2, userList.size());

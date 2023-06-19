@@ -8,6 +8,7 @@ import com.example.carsharingservice.service.RentalService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
     private final CarService carService;
 
+    @Transactional
     @Override
     public Rental add(Rental rental) {
         Car bookedCar = carService.get(rental.getCar().getId());
@@ -39,6 +41,7 @@ public class RentalServiceImpl implements RentalService {
         return rentalRepository.getReferenceById(id);
     }
 
+    @Transactional
     @Override
     public Rental returnCar(Long id, Rental rental) {
         Car carToReturn = carService.get(rental.getCar().getId());
@@ -53,7 +56,7 @@ public class RentalServiceImpl implements RentalService {
         return rentalRepository.getOverdueRentals(LocalDateTime.now());
     }
 
-    public Rental update(Long id, Rental rental) {
+    protected Rental update(Long id, Rental rental) {
         Rental rentalToUpdate = rentalRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("There is no rental with id: " + id)
         );

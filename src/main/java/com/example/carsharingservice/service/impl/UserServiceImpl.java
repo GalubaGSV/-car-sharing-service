@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllWithChatId() {
-        return userRepository.findAllWithChatId();
+    public List<User> findByChatIdIsNotNull() {
+        return userRepository.findByChatIdIsNotNull();
     }
 }

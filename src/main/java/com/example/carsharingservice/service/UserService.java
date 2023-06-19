@@ -18,5 +18,5 @@ public interface UserService {
 
     List<User> findAllByRole(Role role);
 
-    List<User> findAllWithChatId();
+    List<User> findByChatIdIsNotNull();
 }
