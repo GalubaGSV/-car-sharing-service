@@ -74,7 +74,7 @@ public class PaymentController {
     @PostMapping
     public PaymentResponseDto addPayment(@RequestBody StripeUserRequestDto stripeUserRequestDto) {
         Payment payment = new Payment();
-        payment.setPaymentType(PaymentType.PAYMENT);
+        payment.setPaymentType(PaymentType.valueOf(stripeUserRequestDto.getPaymentType().toUpperCase()));
         Rental rental = new Rental();
         rental.setId(stripeUserRequestDto.getRentalId());
         payment.setRental(rental);
