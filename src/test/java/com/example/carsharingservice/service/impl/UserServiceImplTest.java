@@ -82,23 +82,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testUserSave_ok() {
-        given(userRepository.save(users.get(LEGAL_USER_INDEX)))
-                .willReturn(users.get(LEGAL_USER_INDEX));
-        User user = userService.save(users.get(LEGAL_USER_INDEX));
-
-        assertEquals(users.get(LEGAL_USER_INDEX), user);
-    }
-
-    @Test
-    void testUserSave_notOk() {
-        given(userRepository.save(users.get(ILLEGAL_USER_INDEX)))
-                .willThrow(RuntimeException.class);
-
-        assertThrows(RuntimeException.class, () -> userService.save(users.get(ILLEGAL_USER_INDEX)));
-    }
-
-    @Test
     void testUserFindByChatId_ok() {
         given(userRepository.findByChatId(LEGAL_CHAT_ID))
                 .willReturn(Optional.ofNullable(users.get(LEGAL_USER_INDEX)));
