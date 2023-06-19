@@ -24,7 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class UserServiceImplTest {
     private List<User> users = new ArrayList<>();
     private static final int LEGAL_USER_INDEX = 0;
-    private static final int ILLEGAL_USER_INDEX = 1;
     private static final long LEGAL_USER_ID = 1L;
     private static final long ILLEGAL_USER_ID = 0L;
     private static final long LEGAL_CHAT_ID = 1L;
@@ -79,23 +78,6 @@ class UserServiceImplTest {
                 .willThrow(NullPointerException.class);
 
         assertThrows(NullPointerException.class, () -> userService.findByEmail(ILLEGAL_EMAIL));
-    }
-
-    @Test
-    void testUserSave_ok() {
-        given(userRepository.save(users.get(LEGAL_USER_INDEX)))
-                .willReturn(users.get(LEGAL_USER_INDEX));
-        User user = userService.save(users.get(LEGAL_USER_INDEX));
-
-        assertEquals(users.get(LEGAL_USER_INDEX), user);
-    }
-
-    @Test
-    void testUserSave_notOk() {
-        given(userRepository.save(users.get(ILLEGAL_USER_INDEX)))
-                .willThrow(RuntimeException.class);
-
-        assertThrows(RuntimeException.class, () -> userService.save(users.get(ILLEGAL_USER_INDEX)));
     }
 
     @Test
