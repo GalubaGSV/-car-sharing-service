@@ -24,7 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class UserServiceImplTest {
     private List<User> users = new ArrayList<>();
     private static final int LEGAL_USER_INDEX = 0;
-    private static final int ILLEGAL_USER_INDEX = 1;
     private static final long LEGAL_USER_ID = 1L;
     private static final long ILLEGAL_USER_ID = 0L;
     private static final long LEGAL_CHAT_ID = 1L;
