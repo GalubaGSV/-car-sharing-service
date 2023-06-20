@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
@@ -19,13 +20,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
     private List<User> users = new ArrayList<>();
     private static final int LEGAL_USER_INDEX = 0;
-    private static final int ILLEGAL_USER_INDEX = 1;
     private static final long LEGAL_USER_ID = 1L;
     private static final long ILLEGAL_USER_ID = 0L;
     private static final long LEGAL_CHAT_ID = 1L;
@@ -39,8 +38,6 @@ class UserServiceImplTest {
     private static final Role LEGAL_ROLE = Role.CUSTOMER;
     @InjectMocks
     private UserServiceImpl userService;
-    @Mock
-    private PasswordEncoder passwordEncoder;
     @Mock
     private UserRepository userRepository;
 
@@ -85,23 +82,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testUserSave_ok() {
-        given(userRepository.save(users.get(LEGAL_USER_INDEX)))
-                .willReturn(users.get(LEGAL_USER_INDEX));
-        User user = userService.save(users.get(LEGAL_USER_INDEX));
-
-        assertEquals(users.get(LEGAL_USER_INDEX), user);
-    }
-
-    @Test
-    void testUserSave_notOk() {
-        given(userRepository.save(users.get(ILLEGAL_USER_INDEX)))
-                .willThrow(RuntimeException.class);
-
-        assertThrows(RuntimeException.class, () -> userService.save(users.get(ILLEGAL_USER_INDEX)));
-    }
-
-    @Test
     void testUserFindByChatId_ok() {
         given(userRepository.findByChatId(LEGAL_CHAT_ID))
                 .willReturn(Optional.ofNullable(users.get(LEGAL_USER_INDEX)));
@@ -137,9 +117,9 @@ class UserServiceImplTest {
         userThree.setId(LEGAL_USER_ID + 2L);
         userThree.setChatId(null);
 
-        given(userRepository.findAllWithChatId()).willReturn(List.of(userOne, userTwo));
+        given(userRepository.findByChatIdIsNotNull()).willReturn(List.of(userOne, userTwo));
 
-        List<User> userList = userService.findAllWithChatId();
+        List<User> userList = userService.findByChatIdIsNotNull();
 
         assertNotNull(userList);
         assertEquals(2, userList.size());

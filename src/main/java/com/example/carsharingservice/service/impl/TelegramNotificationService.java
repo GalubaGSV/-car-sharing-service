@@ -58,7 +58,7 @@ public class TelegramNotificationService implements NotificationService {
                         rental.getUser());
             }
         } else {
-            List<User> usersWithChatId = userService.findAllWithChatId();
+            List<User> usersWithChatId = userService.findByChatIdIsNotNull();
             for (User user : usersWithChatId) {
                 sendMessage("No rentals overdue today", user);
             }

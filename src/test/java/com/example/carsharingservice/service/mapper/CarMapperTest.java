@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
-import com.example.carsharingservice.model.CarType;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +32,7 @@ public class CarMapperTest {
 
         assertEquals(MODEL, result.getModel());
         assertEquals(BRAND, result.getBrand());
-        assertEquals(CarType.UNIVERSAL, result.getCarType());
+        assertEquals(Car.CarType.UNIVERSAL, result.getCarType());
         assertEquals(INVENTORY, result.getInventory());
         assertEquals(BigDecimal.valueOf(DAILY_FEE), result.getDailyFee());
     }
@@ -43,7 +42,7 @@ public class CarMapperTest {
         car.setId(CAR_ID);
         car.setModel(MODEL);
         car.setBrand(BRAND);
-        car.setCarType(CarType.UNIVERSAL);
+        car.setCarType(Car.CarType.UNIVERSAL);
         car.setDailyFee(BigDecimal.valueOf(DAILY_FEE));
         car.setInventory(INVENTORY);
         car.setDeleted(false);
@@ -66,7 +65,7 @@ public class CarMapperTest {
         CarRequestDto requestDto = new CarRequestDto();
         requestDto.setModel(MODEL);
         requestDto.setBrand(BRAND);
-        requestDto.setCarType(CarType.UNIVERSAL);
+        requestDto.setCarType(Car.CarType.UNIVERSAL);
         requestDto.setInventory(INVENTORY);
         requestDto.setDailyFee(BigDecimal.valueOf(DAILY_FEE));
         return requestDto;

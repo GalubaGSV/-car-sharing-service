@@ -5,7 +5,6 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.model.Car;
-import com.example.carsharingservice.model.CarType;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
@@ -24,7 +23,7 @@ class RentalMapperTest {
     private static final int INVENTORY = 20;
     private static final boolean IS_DELETED = false;
     private static final Role ROLE = Role.CUSTOMER;
-    private static final CarType CAR_TYPE = CarType.SEDAN;
+    private static final Car.CarType CAR_TYPE = Car.CarType.SEDAN;
     private static final BigDecimal DAILY_FEE = BigDecimal.valueOf(20L);
     private static final String EMAIL = "qwerty123@mail.com";
     private static final String PASSWORD = "qwerty123";

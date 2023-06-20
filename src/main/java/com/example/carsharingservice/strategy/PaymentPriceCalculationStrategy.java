@@ -1,9 +1,9 @@
 package com.example.carsharingservice.strategy;
 
-import java.math.BigDecimal;
 import com.example.carsharingservice.model.Rental;
-import org.springframework.stereotype.Component;
+import java.math.BigDecimal;
 import java.time.Duration;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PaymentPriceCalculationStrategy implements PriceCalculationStrategy {

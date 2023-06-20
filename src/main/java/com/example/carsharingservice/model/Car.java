@@ -35,4 +35,11 @@ public class Car {
     private BigDecimal dailyFee;
     @Column(nullable = false)
     private boolean deleted = false;
+
+    public enum CarType {
+        SEDAN,
+        SUV,
+        HATCHBACK,
+        UNIVERSAL
+    }
 }

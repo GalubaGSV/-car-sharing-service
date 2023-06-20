@@ -34,7 +34,7 @@ public class NotificationBot extends TelegramLongPollingBot {
         messageToSend.setChatId(update.getMessage().getChatId());
         if ("/start".equals(input)) {
             messageToSend.setText("Hi!)\n I'm a notification bot, "
-                    + "write your email for authentication in one message, example: \n"
+                    + "write your email and password for authentication in one message, example: \n"
                     + "email : bob@gmail.com, "
                     + "password : 12345678");
             try {

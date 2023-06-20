@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
-import com.example.carsharingservice.model.PaymentStatus;
-import com.example.carsharingservice.model.PaymentType;
 import com.example.carsharingservice.model.Rental;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,8 +18,8 @@ public class PaymentMapperTest {
         // Arrange
         PaymentRequestDto dto = new PaymentRequestDto();
         dto.setPaymentAmount(BigDecimal.valueOf(500));
-        dto.setPaymentType(PaymentType.PAYMENT);
-        dto.setPaymentStatus(PaymentStatus.PENDING);
+        dto.setPaymentType(Payment.PaymentType.PAYMENT);
+        dto.setPaymentStatus(Payment.PaymentStatus.PENDING);
         dto.setRentalId(1L);
         dto.setPaymentSessionId("session123");
         dto.setPaymentUrl("https://example.com/payment");
@@ -32,8 +30,8 @@ public class PaymentMapperTest {
         // Assert
         assertNotNull(payment);
         assertEquals(dto.getPaymentAmount(), payment.getPaymentAmount());
-        assertEquals(PaymentType.PAYMENT, payment.getPaymentType());
-        assertEquals(PaymentStatus.PENDING, payment.getPaymentStatus());
+        assertEquals(Payment.PaymentType.PAYMENT, payment.getPaymentType());
+        assertEquals(Payment.PaymentStatus.PENDING, payment.getPaymentStatus());
         assertNotNull(payment.getRental());
         assertEquals(dto.getRentalId(), payment.getRental().getId());
         assertEquals(dto.getPaymentSessionId(), payment.getPaymentSessionId());
@@ -46,8 +44,8 @@ public class PaymentMapperTest {
         Payment payment = new Payment();
         payment.setId(1L);
         payment.setPaymentAmount(BigDecimal.valueOf(750));
-        payment.setPaymentType(PaymentType.PAYMENT);
-        payment.setPaymentStatus(PaymentStatus.PAID);
+        payment.setPaymentType(Payment.PaymentType.PAYMENT);
+        payment.setPaymentStatus(Payment.PaymentStatus.PAID);
         Rental rental = new Rental();
         rental.setId(1L);
         payment.setRental(rental);
