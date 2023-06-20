@@ -2,7 +2,6 @@ package com.example.carsharingservice.stripepaymant;
 
 import com.example.carsharingservice.dto.response.StripePaymentSessionResponseDto;
 import com.example.carsharingservice.model.Payment;
-import com.example.carsharingservice.model.PaymentStatus;
 import com.example.carsharingservice.service.PaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -37,11 +36,11 @@ public class StripePaymentProviderImpl implements StripePaymentProvider {
                         .build();
         Session session = null;
         try {
-            session = Session.create(p  arams);
+            session = Session.create(params);
         } catch (StripeException e) {
             throw new RuntimeException("Can't create payment connection ", e);
         }
-        payment.setPaymentStatus(PaymentStatus.PENDING);
+        payment.setPaymentStatus(Payment.PaymentStatus.PENDING);
         payment.setPaymentAmount(BigDecimal.valueOf(session.getAmountTotal() / 100));
         payment.setPaymentSessionId(session.getId());
         payment.setPaymentUrl(session.getUrl());

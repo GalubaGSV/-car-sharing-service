@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-
 @Component
 public class NotificationBot extends TelegramLongPollingBot {
     private static final String BOT_NAME = "Car sharing service";

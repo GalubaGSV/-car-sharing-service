@@ -1,7 +1,6 @@
 package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Car;
-import com.example.carsharingservice.model.CarType;
 import com.example.carsharingservice.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
@@ -39,7 +38,7 @@ public class CarServiceImplTest {
         existingCar.setId(EXISTING_CAR_ID);
         existingCar.setModel(MODEL);
         existingCar.setBrand(BRAND);
-        existingCar.setCarType(CarType.UNIVERSAL);
+        existingCar.setCarType(Car.CarType.UNIVERSAL);
         existingCar.setDailyFee(BigDecimal.valueOf(DAILY_FEE));
         existingCar.setInventory(INVENTORY);
 
@@ -47,7 +46,7 @@ public class CarServiceImplTest {
         updatedCar.setId(EXISTING_CAR_ID);
         updatedCar.setModel(UPDATED_MODEL);
         updatedCar.setBrand(UPDATED_BRAND);
-        updatedCar.setCarType(CarType.SUV);
+        updatedCar.setCarType(Car.CarType.SUV);
         updatedCar.setDailyFee(BigDecimal.valueOf(UPDATED_DAILY_FEE));
         updatedCar.setInventory(UPDATED_INVENTORY);
 
