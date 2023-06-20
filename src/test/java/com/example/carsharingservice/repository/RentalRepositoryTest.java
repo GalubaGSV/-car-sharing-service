@@ -23,7 +23,7 @@ import java.util.List;
 class RentalRepositoryTest {
     private static final boolean FALSE_STATUS = false;
     private static final boolean TRUE_STATUS = true;
-    private static final Long USER_ID = 1L;
+    private static final Long USER_ID = 6L;
     private static final Pageable PAGE_REQUEST = PageRequest.of(0, 5);
     @Container
     static MySQLContainer<?> database = new MySQLContainer<>("mysql")
@@ -70,7 +70,7 @@ class RentalRepositoryTest {
     void getOverdueRentals_ok() {
         List<Rental> actual = rentalRepository
                 .getOverdueRentals(LocalDateTime.of(2023, 6, 27, 3, 0, 0));
-        Assertions.assertEquals(1, actual.size());
-        Assertions.assertEquals("2023-06-11T21:00", actual.get(0).getRentalDate().toString());
+        Assertions.assertEquals(3, actual.size());
+        Assertions.assertEquals("2023-05-11T21:00", actual.get(0).getRentalDate().toString());
     }
 }
