@@ -1,6 +1,6 @@
 # CAR SHARING SERVICE
 
-![img.png](img.png)
+![img.png](src/main/resources/docs/img.png)
 
 ## Project Description
 
