@@ -1,4 +1,4 @@
-package com.example.carsharingservice.security;
+package com.example.carsharingservice.service;
 
 import com.example.carsharingservice.exception.AuthenticationException;
 import com.example.carsharingservice.model.User;

@@ -1,4 +1,4 @@
-package com.example.carsharingservice.service.mapper;
+package com.example.carsharingservice.mapper;
 
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;

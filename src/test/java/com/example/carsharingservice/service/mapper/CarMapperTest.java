@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
+import com.example.carsharingservice.mapper.CarMapper;
 import com.example.carsharingservice.model.Car;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;

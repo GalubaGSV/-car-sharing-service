@@ -1,5 +1,6 @@
 package com.example.carsharingservice.service.mapper;
 
+import com.example.carsharingservice.mapper.PaymentMapper;
 import java.math.BigDecimal;
 import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;

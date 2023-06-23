@@ -8,7 +8,7 @@ import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.service.CarService;
-import com.example.carsharingservice.service.mapper.DtoMapper;
+import com.example.carsharingservice.mapper.DtoMapper;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

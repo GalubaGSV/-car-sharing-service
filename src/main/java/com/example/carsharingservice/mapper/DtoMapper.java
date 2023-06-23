@@ -1,4 +1,4 @@
-package com.example.carsharingservice.service.mapper;
+package com.example.carsharingservice.mapper;
 
 public interface DtoMapper<D, R, M> {
     M mapToModel(D dto);
