@@ -4,6 +4,8 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
+import com.example.carsharingservice.mapper.DtoMapper;
+import com.example.carsharingservice.mapper.UserMapper;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
 import org.junit.jupiter.api.Test;

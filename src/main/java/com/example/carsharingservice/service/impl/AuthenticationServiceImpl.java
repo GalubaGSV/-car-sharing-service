@@ -1,8 +1,9 @@
-package com.example.carsharingservice.security;
+package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.exception.AuthenticationException;
 import com.example.carsharingservice.model.Role;
 import com.example.carsharingservice.model.User;
+import com.example.carsharingservice.service.AuthenticationService;
 import com.example.carsharingservice.service.UserService;
 import java.util.Optional;
 import lombok.AllArgsConstructor;

@@ -4,6 +4,8 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
+import com.example.carsharingservice.mapper.DtoMapper;
+import com.example.carsharingservice.mapper.RentalMapper;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.Role;

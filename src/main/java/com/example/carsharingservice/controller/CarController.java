@@ -2,9 +2,9 @@ package com.example.carsharingservice.controller;
 
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
+import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.service.CarService;
-import com.example.carsharingservice.service.mapper.DtoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
