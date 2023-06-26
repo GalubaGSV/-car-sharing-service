@@ -2,7 +2,6 @@ package com.example.carsharingservice.telegrambot;
 
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class NotificationBot extends TelegramLongPollingBot {
     private final PasswordEncoder passwordEncoder;
 
     public NotificationBot(UserService userService, PasswordEncoder passwordEncoder) {
-        super(Dotenv.configure().load().get("TOKEN"));
+        super(System.getenv("TOKEN"));
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
