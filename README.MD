@@ -1,8 +1,8 @@
-# CAR SHARING SERVICE
+# 🚘 CAR SHARING SERVICE 🚘
 
 ![img.png](src/main/resources/docs/img.png)
 
-## Project Description
+## 📄 Project Description
 
 There is a car-sharing service in our city, where you can rent cars and pay for your usage using cash, depending on the
 rental duration.
@@ -16,7 +16,7 @@ The main task of the project is the implementation of an online car rental manag
 streamline the
 work of the service administrators and greatly enhance the user experience.
 
-## Functional (what the system should do)
+## 🛠 Functional (what the system should do)
 
 - Web-based
 - Manage car sharing inventory
@@ -71,32 +71,32 @@ work of the service administrators and greatly enhance the user experience.
 ### Controllers
 
 - Authentication Controller
-    - POST: `/register` - register a new user
-    - POST: `/login` - Login to the system, receive a token
+  - POST: `/register` - register a new user
+  - POST: `/login` - Login to the system, receive a token
 
 - Users Controller
-    - PUT: `/users/{id}/role` - update user role
-    - GET: `/users/me` - get my profile info
-    - PUT: `/users/me` - update profile info
+  - PUT: `/users/{id}/role` - update user role
+  - GET: `/users/me` - get my profile info
+  - PUT: `/users/me` - update profile info
 
 - Cars Controller
-    - POST: `/cars` - add a new car
-    - GET: `/cars` - get a list of cars
-    - GET: `/cars/{id}` - get car's detailed information by id
-    - PATCH: `/cars/{id}`- update car (also manage inventory)
-    - DELETE: `/cars/{id}` - delete car ин шв
+  - POST: `/cars` - add a new car
+  - GET: `/cars` - get a list of cars
+  - GET: `/cars/{id}` - get car's detailed information by id
+  - PATCH: `/cars/{id}`- update car (also manage inventory)
+  - DELETE: `/cars/{id}` - delete car ин шв
 
 - Rentals Controller
-    - POST: `/rentals` - add a new rental
-    - GET: `/rentals` - get rentals by userId and
-    - GET: `/rentals/{id}` - get rental by
-    - POST: `/rentals/{id}/return` - is called to process a car return
+  - POST: `/rentals` - add a new rental
+  - GET: `/rentals` - get rentals by userId and
+  - GET: `/rentals/{id}` - get rental by
+  - POST: `/rentals/{id}/return` - is called to process a car return
 
 - Payments Controller
-    - GET:    `/payments`    - get user's payments
-    - POST:    `/payments`    - create payment session
-    - GET:    `/payments/success`    - check successful Stripe payments (Endpoint for stripe redirection)
-    - GET:    `/payments/cancel`    - return payment paused message
+  - GET:    `/payments`    - get user's payments
+  - POST:    `/payments`    - create payment session
+  - GET:    `/payments/success`    - check successful Stripe payments (Endpoint for stripe redirection)
+  - GET:    `/payments/cancel`    - return payment paused message
 
 ## Telegram notifications
 
@@ -104,6 +104,15 @@ In this project, we notify clients and managers using a Telegram bot.
 Notifications come when leases are created, leases are overdue, and payments are successful
 
 ## Getting Started
+
+## 💻How to Run and Test with Docker
+⚠️Important: You must have Docker installed. If it is not installed, please download it from the website [link](https://www.docker.com/products/docker-desktop/) and proceed with the installation.
+
+* Clone the repo on GitHub
+* Run docker client
+* Build the project: `mvn clean package`
+* In the terminal, run the command: `docker-compose up`
+* Use the address `http://localhost:6868/swagger-ui/index.html#/` to access the documentation.
 
 #### To get started with the car-sharing service, follow these steps:
 
@@ -113,19 +122,35 @@ Notifications come when leases are created, leases are overdue, and payments are
 - Set up the necessary environment variables. Refer to `.env` for the required variables
 - Build the project: mvn compile
 - Run the application: npm start or yarn start.
+  You can test the operation of the application using swagger using
+  address `http://localhost:8080/swagger-ui/index.html#/`
 
-## Also, you can use docker
-
-- First, make sure you have docker installed and running
-- Clone the repository
-- Set up the necessary environment variables. Refer to `.env` for the required variables
-- Build the project: `mvn clean package`
-- Run the command `docker-compose up`
-
-You can test the operation of the application using swagger using
-address `http://localhost:8080/swagger-ui/index.html#/`
+## 🛠 Technologies 🛠
+* Java `17`
+* Apache Maven `3.10.1`
+* Apache Tomcat  `9.0.73`
+* PostgreSQL `42.5.4`
+* Spring:
+  * Boot `3.0.6`
+  * Data Jpa `3.0.6`
+  * Web Mvc `6.0.8`
+* Liquibase-core `4.17.2`
+* lombok `1.18.26`
+* Hibernate `6.1.7.Final`
+* Swagger UI
+* SpringDoc `2.1.0`
+* Checkstyle Plugin `3.1.1`
 
 ## Conclusions
 
 By implementing these features in an online car rental management system, the service can automate processes,
 provide real-time information, and offer a more convenient and efficient experience for both users and administrators.
+
+## Our team Contacts
+If you have any questions or suggestions, please feel free to contact us:
+
+* Sergiy Golubchenko: [GitHub](https://github.com/GalubaGSV) |  [LinkedIn](https://www.linkedin.com/in/sergiy-golubchenko-74646485/)
+* Mariana Polishchuk: [GitHub](https://github.com/marianapolishchuk2169) |  [LinkedIn](https://www.linkedin.com/in/mariana-polishchuk-42b049206/)
+* Oleksandr Lutsenko: [GitHub](https://github.com/AleksandrLts) |  [LinkedIn](https://www.linkedin.com/in/oleksandr-lutsenko-4a8b8923b/)
+* Denys Dominskyi: [GitHub](https://github.com/Dominskyi93) |  [LinkedIn](https://www.linkedin.com/in/denys-dominskyi-6ab182259/)
+* Maksym Yashyn: [GitHub](https://github.com/Nimakel) |  [LinkedIn](https://www.linkedin.com/in/maksym-yashyn-dnipro/)
