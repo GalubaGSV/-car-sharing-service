@@ -1,4 +1,4 @@
-# 🚘 CAR SHARING SERVICE 🚘
+# 🚘 CAR SHARING SERVICE (group project)🚘
 
 ![img.png](src/main/resources/docs/img.png)
 
